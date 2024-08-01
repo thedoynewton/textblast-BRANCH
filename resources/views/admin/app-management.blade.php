@@ -53,9 +53,7 @@
             </tbody>
         </table>
     </div>
-<<<<<<< HEAD
 </div>
-=======
 
     <!-- Update Button for Employees -->
     <div class="mb-4">
@@ -97,7 +95,6 @@
             </tbody>
         </table>
     </div>
->>>>>>> 6937c1489efb18e736742cbb7928fd46dc13c0ea
 </div>
 </div>
 @endsection
