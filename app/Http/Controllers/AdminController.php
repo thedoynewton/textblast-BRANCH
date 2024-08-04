@@ -149,7 +149,7 @@ class AdminController extends Controller
         $user->role = null;
         $user->save();
 
-        return redirect()->route('admin.user-management')->with('success', 'User access removed successfully.');
+        return redirect()->route('admin.user-management')->with('success', 'User role removed successfully.');
     }
 }
 
