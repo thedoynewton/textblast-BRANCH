@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Admin Dashboard')</title>
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="app.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
@@ -13,7 +15,13 @@
             --primary-bg: #614514;
             --primary-text: #000000;
             --secondary-bg: #FFFFFF;
-            --secondary-text: #000000;
+            --secondary-text: #757575;
+
+            /* Sagdii lang sani kay balikan ra koni -zai */
+            --button-text: #291E13;
+            --button-hover-text: #6A6A6A;
+            --button-selected-text: #CCA841;
+            --button-selected-bg: #F7F7F7;
         }
 
         [data-theme="dark"] {
@@ -23,12 +31,12 @@
             --secondary-text: #000000;
         }
 
-        [data-theme="light"] {
+        /* [data-theme="light"] {
             --primary-bg: #614514;
             --primary-text: #000000;
             --secondary-bg: #FFFFFF;
             --secondary-text: #000000;
-        }
+        } */
 
         [data-theme="rosyred"] {
             --primary-bg: #66070e;
@@ -95,7 +103,22 @@
         .dropdown-item:hover {
             background-color: #f3f3f3;
         }
+
+        /* Custom button styles -zai */
+        .button-default {
+            color: var(--button-text);
+        }
+
+        .button-hover:hover {
+            color: var(--button-hover-text);
+        }
+
+        .button-selected {
+            color: var(--button-selected-text);
+            background-color: var(--button-selected-bg);
+        }
     </style>
+
     <script>
         function toggleDropdown() {
             document.getElementById("dropdown").classList.toggle("hidden");
@@ -150,34 +173,35 @@
 
             <hr class="my-4 border-t-2 border-gray-200 w-full">
 
+            <!-- Navigation Links -->
             <ul class="mt-5">
-                <li class="hover:bg-gray-200 my-3">
+                <li class="{{ request()->routeIs('admin.dashboard') ? 'button-selected' : 'button-default button-hover' }} my-3">
                     <a href="{{ route('admin.dashboard') }}" class="px-10 py-3 flex items-center w-full h-full font-semibold text-lg">
-                        <img src="/svg/dashboard.svg" alt="Dashboard Icon" class="w-6 h-6 mr-2">
+                        <img src="/svg/dashboard.svg" alt="Dashboard Icon" class="w-6 h-6 mr-[1.2rem]">
                         Dashboard
                     </a>
                 </li>
-                <li class="hover:bg-gray-200 my-3">
+                <li class="{{ request()->routeIs('admin.messages') ? 'button-selected' : 'button-default button-hover' }} my-3">
                     <a href="{{ route('admin.messages') }}" class="px-10 py-3 flex items-center w-full h-full font-semibold text-lg">
-                        <img src="/svg/message.svg" alt="Dashboard Icon" class="w-6 h-6 mr-2">
+                        <img src="/svg/message.svg" alt="Messages Icon" class="w-6 h-6 mr-[1.2rem]">
                         Messages
                     </a>
                 </li>
-                <li class="hover:bg-gray-200 my-3">
+                <li class="{{ request()->routeIs('admin.analytics') ? 'button-selected' : 'button-default button-hover' }} my-3">
                     <a href="{{ route('admin.analytics') }}" class="px-10 py-3 flex items-center w-full h-full font-semibold text-lg">
-                        <img src="/svg/analytics.svg" alt="Dashboard Icon" class="w-6 h-6 mr-2">
+                        <img src="/svg/analytics.svg" alt="Analytics Icon" class="w-6 h-6 mr-[1.2rem]">
                         Analytics
                     </a>
                 </li>
-                <li class="hover:bg-gray-200 my-3">
+                <li class="{{ request()->routeIs('admin.user-management') ? 'button-selected' : 'button-default button-hover' }} my-3">
                     <a href="{{ route('admin.user-management') }}" class="px-10 py-3 flex items-center w-full h-full font-semibold text-lg">
-                        <img src="/svg/user.svg" alt="Dashboard Icon" class="w-6 h-6 mr-2">
+                        <img src="/svg/user.svg" alt="User Management Icon" class="w-6 h-6 mr-[1.2rem]">
                         User Management
                     </a>
                 </li>
-                <li class="hover:bg-gray-200 my-3">
+                <li class="{{ request()->routeIs('admin.app-management') ? 'button-selected' : 'button-default button-hover' }} my-3">
                     <a href="{{ route('admin.app-management') }}" class="px-10 py-3 flex items-center w-full h-full font-semibold text-lg">
-                        <img src="/svg/app.svg" alt="Dashboard Icon" class="w-6 h-6 mr-2">
+                        <img src="/svg/app.svg" alt="App Management Icon" class="w-6 h-6 mr-[1.2rem]">
                         App Management
                     </a>
                 </li>
