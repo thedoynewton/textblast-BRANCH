@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
         :root {
-            --primary-bg: #CCA841;
+            --primary-bg: #614514;
             --primary-text: #000000;
             --secondary-bg: #FFFFFF;
             --secondary-text: #000000;
@@ -23,7 +24,7 @@
         }
 
         [data-theme="light"] {
-            --primary-bg: #CCA841;
+            --primary-bg: #614514;
             --primary-text: #000000;
             --secondary-bg: #FFFFFF;
             --secondary-text: #000000;
@@ -65,11 +66,15 @@
         }
 
         .w-73 {
-            width: 18.25rem; /* 73 x 0.25rem */
+            width: 18.25rem;
+            /* 73 x 0.25rem */
         }
+
         .ml-73 {
-            margin-left: 18.25rem; /* 73 x 0.25rem */
+            margin-left: 18.25rem;
+            /* 73 x 0.25rem */
         }
+
         .text-gradient {
             background: linear-gradient(90deg, #614514, #C78E29);
             -webkit-background-clip: text;
@@ -110,13 +115,14 @@
         window.onload = loadTheme;
     </script>
 </head>
+
 <body class="h-screen flex">
     <!-- Sidebar -->
     <div class="bg-white w-73 shadow-lg flex flex-col justify-between fixed h-full">
         <!-- Menu -->
         <div>
             <div class="flex items-center my-5 align-center pl-4">
-                <img src="/images/SePhi Final Icon 1.png" class="w-16 h-auto"/>
+                <img src="/images/SePhi Final Icon 1.png" class="w-16 h-auto" />
                 <h1 class="text-gradient font-semibold text-xl">Text Broadcasting</h1>
             </div>
 
@@ -141,44 +147,44 @@
                     </div>
                 </div>
             </div>
-            
+
             <hr class="my-4 border-t-2 border-gray-200 w-full">
 
             <ul class="mt-5">
                 <li class="hover:bg-gray-200 my-3">
                     <a href="{{ route('admin.dashboard') }}" class="px-10 py-3 flex items-center w-full h-full font-semibold text-lg">
-                        <img src="/images/dashboard.png" class="w-4 h-4 mr-2">
+                        <img src="/svg/dashboard.svg" alt="Dashboard Icon" class="w-6 h-6 mr-2">
                         Dashboard
                     </a>
                 </li>
                 <li class="hover:bg-gray-200 my-3">
                     <a href="{{ route('admin.messages') }}" class="px-10 py-3 flex items-center w-full h-full font-semibold text-lg">
-                        <img src="/images/message.png" class="w-4 h-4 mr-2">
+                        <img src="/svg/message.svg" alt="Dashboard Icon" class="w-6 h-6 mr-2">
                         Messages
                     </a>
                 </li>
                 <li class="hover:bg-gray-200 my-3">
                     <a href="{{ route('admin.analytics') }}" class="px-10 py-3 flex items-center w-full h-full font-semibold text-lg">
-                        <img src="/images/analytics.png" class="w-4 h-4 mr-2">
+                        <img src="/svg/analytics.svg" alt="Dashboard Icon" class="w-6 h-6 mr-2">
                         Analytics
                     </a>
                 </li>
                 <li class="hover:bg-gray-200 my-3">
                     <a href="{{ route('admin.user-management') }}" class="px-10 py-3 flex items-center w-full h-full font-semibold text-lg">
-                        <img src="/images/user_management.png" class="w-4 h-4 mr-2">
+                        <img src="/svg/user.svg" alt="Dashboard Icon" class="w-6 h-6 mr-2">
                         User Management
                     </a>
                 </li>
                 <li class="hover:bg-gray-200 my-3">
                     <a href="{{ route('admin.app-management') }}" class="px-10 py-3 flex items-center w-full h-full font-semibold text-lg">
-                        <img src="/images/app_management.png" class="w-4 h-4 mr-2">
+                        <img src="/svg/app.svg" alt="Dashboard Icon" class="w-6 h-6 mr-2">
                         App Management
                     </a>
                 </li>
             </ul>
         </div>
     </div>
-    
+
     <!-- Main Content -->
     <div class="bg-gray-200 flex-reverse relative flex-1 ml-73">
         <div class="absolute w-full h-36 shadow-md bg-primary"></div>
@@ -191,4 +197,5 @@
         </div>
     </div>
 </body>
+
 </html>
