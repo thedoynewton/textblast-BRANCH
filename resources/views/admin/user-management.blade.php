@@ -60,7 +60,9 @@
 
         <form action="{{ route('admin.user-management') }}" method="GET" class="mb-6">
             <div class="flex items-center">
-                <input type="text" name="search" id="search" placeholder="Search by name" class="w-full h-10 pl-3 pr-3 rounded-md border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition-colors duration-300 hover:border-indigo-500" onkeyup="filterTable()">
+                <div class="bg-gray-100 w-full p-2 border border-transparent rounded-lg">
+                    <input type="text" name="search" id="search" placeholder="Search by name" class="w-full shadow-md h-10 pl-3 pr-3 rounded-md border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition-colors duration-300 hover:border-indigo-500" onkeyup="filterTable()">
+                </div>
                 <button type="submit" class="ml-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 transition-transform duration-300 hover:scale-105">
                     Search
                 </button>
