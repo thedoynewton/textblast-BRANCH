@@ -110,6 +110,7 @@
 
 <script src="//unpkg.com/alpinejs" defer></script>
 
+{{-- Search Function --}}
 <script>
     function filterTable() {
         let input = document.getElementById('search');
