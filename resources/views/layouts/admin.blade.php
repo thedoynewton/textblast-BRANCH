@@ -141,7 +141,7 @@
 
 <body class="h-screen flex">
     <!-- Sidebar -->
-    <div class="bg-white w-73 shadow-lg flex flex-col justify-between fixed h-full">
+    <div class="bg-white w-73 shadow-lg flex flex-col justify-between fixed h-full z-50">
         <!-- Menu -->
         <div>
             <div class="flex items-center my-5 align-center pl-4">
@@ -210,8 +210,8 @@
     </div>
 
     <!-- Main Content -->
-    <div class="bg-gray-200 flex-reverse relative flex-1 ml-73">
-        <div class="absolute w-full h-36 shadow-md bg-primary"></div>
+    <div class="bg-gray-200 flex-1 ml-73 relative overflow-auto z-0">
+        <div class="absolute w-full h-36 shadow-md bg-primary z-0"></div>
         <div class="relative flex-1 p-8">
             <!-- Page Content -->
             <h1 class="text-2xl font-semibold mb-4 text-white">@yield('title')</h1>
