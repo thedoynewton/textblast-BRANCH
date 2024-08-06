@@ -51,19 +51,18 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="relative">
                     <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
-                    <input type="text" name="name" id="name"
+                    <input type="text" name="name" id="name" placeholder="e.g. Juan DELA CRUZ"
                         class="mt-2 w-full h-10 pl-3 rounded-md border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition-colors duration-300 hover:border-indigo-500">
-                    <p class="mt-2 text-xs text-gray-500">
-                        Please make sure the name matches in USeP Email.<br />
-                        Example: Juan DELA CRUZ.
+                    <p class="mt-2 text-xs text-gray-500 text-opacity-35">
+                        Please make sure the name matches in USeP Email.
                     </p>
                 </div>
                 <div class="relative">
                     <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                    <input type="email" name="email" id="email"
+                    <input type="email" name="email" id="email" placeholder="juandelacruz12345@usep.edu.ph"
                         class="mt-2 w-full h-10 pl-3 rounded-md border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition-colors duration-300 hover:border-indigo-500"
                         pattern="[a-zA-Z0-9._%+-]+@usep\.edu\.ph$" title="Must be a @usep.edu.ph email">
-                    <p class="mt-2 text-xs text-gray-500">
+                    <p class="mt-2 text-xs text-gray-500 text-opacity-35">
                         Only USeP emails are accepted.
                     </p>
                 </div>
