@@ -75,7 +75,7 @@
         </div>
     </form>
 
-    <div class="overflow-x-auto">
+    <div class="overflow-x-auto border border-b">
         <table id="userTable" class="min-w-full bg-white border rounded-md overflow-hidden shadow-sm transition-shadow duration-300 hover:shadow-md">
             <thead class="bg-gray-50">
                 <tr>
@@ -92,21 +92,42 @@
                     <td class="py-2 px-4 text-xs text-gray-700">{{ $user->email }}</td>
                     <td class="py-2 px-4 text-xs text-gray-700">{{ $user->role }}</td>
                     <td class="py-2 px-4 text-xs text-gray-700 text-center">
-                        <form action="{{ route('admin.change-role', $user->id) }}" method="POST" class="inline">
-                            @csrf
-                            @method('PATCH')
-                            <select name="role" class="border rounded p-1 text-xs transition-colors duration-300 hover:border-indigo-500">
-                                <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
-                                <option value="subadmin" {{ $user->role == 'subadmin' ? 'selected' : '' }}>Subadmin</option>
-                            </select>
-                            <button type="submit" class="bg-blue-500 text-white px-2 py-1 rounded text-xs hover:bg-blue-600 focus:outline-none transition-transform duration-300 hover:scale-105">Change Role</button>
-                        </form>
+                        <div x-data="{ open: false }" class="relative inline-flex items-center">
+                            <button @click="open = !open" class="inline-flex items-center justify-center p-1 transition-transform duration-300 hover:scale-105">
+                                <div class="rounded-full bg-blue-500 p-2 hover:bg-blue-600" title="Change Role">
+                                    <img src="/svg/switch user.svg" alt="Change Role" class="h-5 w-5" style="filter: brightness(0) invert(1);">
+                                </div>
+                            </button>
+                    
+                            <div x-show="open" @click.outside="open = false" x-transition:enter="transition ease-out duration-100"
+                                x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+                                x-transition:leave="transition ease-in duration-75" x-transition:leave-start="opacity-100 scale-100"
+                                x-transition:leave-end="opacity-0 scale-95" 
+                                class="origin-top-right absolute right-full mr-2 w-36 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                <form action="{{ route('admin.change-role', $user->id) }}" method="POST">
+                                    @csrf
+                                    @method('PATCH')
+                                    <div class="py-1">
+                                        <button name="role" value="admin"
+                                            class="text-gray-700 block px-4 py-2 text-sm w-full text-left hover:bg-gray-100">Admin</button>
+                                        <button name="role" value="subadmin"
+                                            class="text-gray-700 block px-4 py-2 text-sm w-full text-left hover:bg-gray-100">Subadmin</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    
                         <form action="{{ route('admin.remove-access', $user->id) }}" method="POST" class="inline">
                             @csrf
                             @method('PATCH')
-                            <button type="submit" class="bg-red-500 text-white px-2 py-1 rounded text-xs hover:bg-red-600 focus:outline-none transition-transform duration-300 hover:scale-105">Remove Access</button>
+                            <button type="submit" class="inline-flex items-center justify-center p-1 transition-transform duration-300 hover:scale-105">
+                                <div class="rounded-full bg-red-500 p-2 hover:bg-red-600" title="Remove Access">
+                                    <img src="/svg/remove access.svg" alt="Remove Access" class="h-5 w-5" style="filter: brightness(0) invert(1);">
+                                </div>
+                            </button>
                         </form>
                     </td>
+                    
                 </tr>
                 @endforeach
             </tbody>
