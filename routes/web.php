@@ -45,10 +45,13 @@ Route::get('/admin/app-management', [AdminController::class, 'appManagement'])->
 // Subadmin dashboard route
 Route::get('/subadmin/dashboard', [SubAdminController::class, 'dashboard'])->name('subadmin.dashboard')->middleware('auth');
 
-// Admin messages route
+// Subadmin messages route
 Route::get('/subadmin/messages', [SubAdminController::class, 'messages'])->name('subadmin.messages')->middleware('auth');
+// New Line Added: Route for Subadmin messages (zai)
+Route::post('/subadmin/send-messages', [AdminController::class, 'sendMessages'])->name('subadmin.send-messages')->middleware('auth');
+// End of line 50 (zai)
 
-// Admin analytics route
+// Subadmin analytics route
 Route::get('/subadmin/analytics', [SubAdminController::class, 'analytics'])->name('subadmin.analytics')->middleware('auth');
 
 //</SUB-ADMIN ROUTES>
