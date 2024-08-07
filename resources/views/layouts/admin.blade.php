@@ -5,29 +5,91 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Admin Dashboard')</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
     <!-- Standard favicon -->
     <link rel="icon" href="/images/SePhi Final Icon 1.png" type="image/png" sizes="32x32">
     <link rel="icon" href="/images/SePhi Final Icon 1.png" type="image/png" sizes="64x64">
     <link rel="icon" href="/images/SePhi Final Icon 1.png" type="image/png" sizes="128x128">
-    <script src="https://cdn.tailwindcss.com"></script>
 
     <link rel="stylesheet" href="app.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
         :root {
-            --primary-bg: #614514;
+            --primary-bg: ##C3CBDC;
             --primary-text: #000000;
             --secondary-bg: #FFFFFF;
             --secondary-text: #757575;
 
-            /* Sagdii lang sani kay balikan ra koni -zai */
+            /* For the Navigation Link Button State */
             --button-text: #291E13;
             --button-hover-text: #6A6A6A;
             --button-selected-text: #CCA841;
-            --button-selected-bg: #F7F7F7;
+            --button-selected-bg: #E5E7EB;
         }
 
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--secondary-bg);
+            color: var(--secondary-text);
+        }
+
+        .bg-primary {
+            background-color: var(--primary-bg);
+        }
+
+        .text-primary {
+            color: var(--primary-text);
+        }
+
+        .w-73 {
+            width: 18.25rem;
+            /* 73 x 0.25rem */
+        }
+
+        .ml-73 {
+            margin-left: 18.25rem;
+            /* 73 x 0.25rem */
+        }
+
+        /* LOGO */
+        .text-gradient {
+            background: linear-gradient(90deg, #614514, #C78E29);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .z-50 {
+            z-index: 50;
+        }
+
+        .dropdown-item {
+            width: 100%;
+            padding: 0.5rem 1rem;
+            text-align: left;
+            display: block;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f3f3f3;
+        }
+
+        /* BUTTON STATES */
+        .button-default {
+            color: var(--button-text);
+        }
+
+        .button-hover:hover {
+            color: var(--button-hover-text);
+        }
+
+        .button-selected {
+            color: var(--button-selected-text);
+            background-color: var(--button-selected-bg);
+        }
+
+        /* SYSTEM THEMES */
         [data-theme="dark"] {
             --primary-bg: #1C4E80;
             --primary-text: #000000;
@@ -62,65 +124,6 @@
             --secondary-bg: #a7cdff;
             --secondary-text: #000000;
         }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--secondary-bg);
-            color: var(--secondary-text);
-        }
-
-        .bg-primary {
-            background-color: var(--primary-bg);
-        }
-
-        .text-primary {
-            color: var(--primary-text);
-        }
-
-        .w-73 {
-            width: 18.25rem;
-            /* 73 x 0.25rem */
-        }
-
-        .ml-73 {
-            margin-left: 18.25rem;
-            /* 73 x 0.25rem */
-        }
-
-        .text-gradient {
-            background: linear-gradient(90deg, #614514, #C78E29);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .z-50 {
-            z-index: 50;
-        }
-
-        .dropdown-item {
-            width: 100%;
-            padding: 0.5rem 1rem;
-            text-align: left;
-            display: block;
-        }
-
-        .dropdown-item:hover {
-            background-color: #f3f3f3;
-        }
-
-        /* Custom button styles -zai */
-        .button-default {
-            color: var(--button-text);
-        }
-
-        .button-hover:hover {
-            color: var(--button-hover-text);
-        }
-
-        .button-selected {
-            color: var(--button-selected-text);
-            background-color: var(--button-selected-bg);
-        }
     </style>
 
     <script>
@@ -145,7 +148,7 @@
 
 <body class="h-screen flex">
     <!-- Sidebar -->
-    <div class="bg-white w-73 shadow-lg flex flex-col justify-between fixed h-full z-50">
+    <div class="bg-white w-73 flex flex-col justify-between fixed h-full z-50">
         <!-- Menu -->
         <div>
             <div class="flex items-center my-5 align-center pl-4">
@@ -301,7 +304,7 @@
         <div class="absolute w-full h-36 shadow-md bg-primary z-0"></div>
         <div class="relative flex-1 p-8">
             <!-- Page Content -->
-            <h1 class="text-2xl font-semibold mb-4 text-white">@yield('title')</h1>
+            <h1 class="text-2xl font-semibold mb-4 text-primary">@yield('title')</h1>
             <div class="mt-10">
                 @yield('content')
             </div>
