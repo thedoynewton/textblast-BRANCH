@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'SubAdmin Dashboard')</title>
+    <!-- Standard favicon -->
+    <link rel="icon" href="/images/SePhi Final Icon 1.png" type="image/png" sizes="32x32">
+    <link rel="icon" href="/images/SePhi Final Icon 1.png" type="image/png" sizes="64x64">
+    <link rel="icon" href="/images/SePhi Final Icon 1.png" type="image/png" sizes="128x128">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
