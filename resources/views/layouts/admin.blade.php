@@ -188,8 +188,7 @@
 
             <!-- Navigation Links -->
             <ul class="mt-5">
-                <li
-                    class="{{ request()->routeIs('admin.dashboard') ? 'button-selected' : 'button-default button-hover' }} my-3">
+                <li class="{{ request()->routeIs('admin.dashboard') ? 'button-selected' : 'button-default button-hover' }} my-3">
                     <a href="{{ route('admin.dashboard') }}"
                         class="px-10 py-3 flex items-center w-full h-full font-semibold text-lg">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -206,8 +205,7 @@
                         Dashboard
                     </a>
                 </li>
-                <li
-                    class="{{ request()->routeIs('admin.messages') ? 'button-selected' : 'button-default button-hover' }} my-3">
+                <li class="{{ request()->routeIs('admin.messages') ? 'button-selected' : 'button-default button-hover' }} my-3">
                     <a href="{{ route('admin.messages') }}"
                         class="px-10 py-3 flex items-center w-full h-full font-semibold text-lg">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
