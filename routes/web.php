@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FilterController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\SubAdminController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,13 +19,13 @@ Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('auth/google', [AuthController::class, 'redirectToGoogle'])->name('google.login');
 
 //<ADMIN ROUTES>
-
 // Admin dashboard route
 Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard')->middleware('auth');
 
-// Admin routes
-Route::get('/admin/messages', [AdminController::class, 'messages'])->name('admin.messages')->middleware('auth');
-Route::post('/admin/send-messages', [AdminController::class, 'sendMessages'])->name('admin.send-messages')->middleware('auth');
+// Admin messages
+Route::get('/admin/messages', [AdminController::class, 'messages'])->name('admin.messages');
+Route::post('/admin/broadcast', [MessageController::class, 'broadcastToRecipients'])->name('admin.broadcastToRecipients');
+// Route::post('/admin/send-messages', [AdminController::class, 'sendMessages'])->name('admin.send-messages')->middleware('auth');
 
 // Admin analytics route
 Route::get('/admin/analytics', [AdminController::class, 'analytics'])->name('admin.analytics')->middleware('auth');
@@ -41,17 +43,21 @@ Route::get('/admin/app-management', [AdminController::class, 'appManagement'])->
 
 
 //<SUB-ADMIN ROUTES>
-
 // Subadmin dashboard route
 Route::get('/subadmin/dashboard', [SubAdminController::class, 'dashboard'])->name('subadmin.dashboard')->middleware('auth');
 
 // Subadmin messages route
 Route::get('/subadmin/messages', [SubAdminController::class, 'messages'])->name('subadmin.messages')->middleware('auth');
-// New Line Added: Route for Subadmin messages (zai)
 Route::post('/subadmin/send-messages', [AdminController::class, 'sendMessages'])->name('subadmin.send-messages')->middleware('auth');
-// End of line 50 (zai)
 
 // Subadmin analytics route
 Route::get('/subadmin/analytics', [SubAdminController::class, 'analytics'])->name('subadmin.analytics')->middleware('auth');
+
+//subadmin send messages route
+Route::post('/admin/send-messages', [MessageController::class, 'sendBulkMessages'])->name('admin.send-messages');
+Route::post('/admin/broadcast-employees', [MessageController::class, 'broadcastToEmployees'])->name('admin.broadcastToEmployees');
+
+// API Route for fetching dependent filters
+Route::get('/api/filters/{type}/{campusId}', [FilterController::class, 'getFilters']);
 
 //</SUB-ADMIN ROUTES>

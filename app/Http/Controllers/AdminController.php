@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Campus;
-use App\Models\College;
-use App\Models\Employee;
-use App\Models\Program;
-use App\Models\Student;
 use App\Models\User;
 use App\Models\Year;
+use App\Models\Campus;
+use App\Models\Office;
+use App\Models\Status;
+use App\Models\College;
+use App\Models\Program;
+use App\Models\Student;
+use App\Models\Employee;
+use App\Models\Major;
+use App\Models\Type;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Http;
 
 class AdminController extends Controller
 {
@@ -26,46 +30,57 @@ class AdminController extends Controller
         $colleges = College::all();
         $programs = Program::all();
         $years = Year::all();
+        $offices = Office::all();
+        $statuses = Status::all();
+        $types = Type::all();
 
-        return view('admin.messages', compact('campuses', 'colleges', 'programs', 'years'));
+        // Convert the collections to arrays for better visibility
+        //dd($campuses->toArray(), $colleges->toArray(), $programs->toArray(), $years->toArray(), $offices->toArray(), $statuses->toArray(), $types->toArray());
+
+        return view('admin.messages', compact('campuses', 'colleges', 'programs', 'years', 'offices', 'statuses', 'types'));
     }
 
-    public function sendMessages(Request $request)
+    public function broadcastMessages(Request $request)
     {
-        $message = $request->input('message');
-        $campusId = $request->input('campus');
-        $collegeId = $request->input('college');
-        $programId = $request->input('program');
-        $yearId = $request->input('year');
-
-        $query = Student::query();
-
-        if ($campusId) {
-            $query->where('campus_id', $campusId);
-        }
-
-        if ($collegeId) {
-            $query->where('college_id', $collegeId);
-        }
-
-        if ($programId) {
-            $query->where('program_id', $programId);
-        }
-
-        if ($yearId) {
-            $query->where('year_id', $yearId);
-        }
-
-        $students = $query->get();
-
-        // Send messages using Movider API
-        foreach ($students as $student) {
-            $response = $this->sendMoviderMessage($student->stud_contact, $message);
-            Log::info('Movider response for ' . $student->stud_contact . ': ' . $response->body());
-        }
-
-        return redirect()->route('admin.messages')->with('success', 'Messages sent successfully.');
+        return app(MessageController::class)->broadcastToRecipients($request);
     }
+
+    // public function sendMessages(Request $request)
+    // {
+    //     $message = $request->input('message');
+    //     $campusId = $request->input('campus');
+    //     $collegeId = $request->input('college');
+    //     $programId = $request->input('program');
+    //     $yearId = $request->input('year');
+
+    //     $query = Student::query();
+
+    //     if ($campusId) {
+    //         $query->where('campus_id', $campusId);
+    //     }
+
+    //     if ($collegeId) {
+    //         $query->where('college_id', $collegeId);
+    //     }
+
+    //     if ($programId) {
+    //         $query->where('program_id', $programId);
+    //     }
+
+    //     if ($yearId) {
+    //         $query->where('year_id', $yearId);
+    //     }
+
+    //     $students = $query->get();
+
+    //     // Send messages using Movider API
+    //     foreach ($students as $student) {
+    //         $response = $this->sendMoviderMessage($student->stud_contact, $message);
+    //         Log::info('Movider response for ' . $student->stud_contact . ': ' . $response->body());
+    //     }
+
+    //     return redirect()->route('admin.messages')->with('success', 'Messages sent successfully.');
+    // }
 
     protected function sendMoviderMessage($phoneNumber, $message)
     {
@@ -89,7 +104,6 @@ class AdminController extends Controller
         return $response;
     }
 
-
     public function analytics()
     {
         return view('admin.analytics');
@@ -103,11 +117,31 @@ class AdminController extends Controller
 
     public function appManagement()
     {
-        $students = Student::with(['campus', 'college', 'program', 'major', 'year'])->get();
-        $employees = Employee::with(['campus', 'office', 'status', 'type'])->get();
+        $students = Student::all();
+        $campuses = Campus::all();
+        $colleges = College::all();
+        $programs = Program::all();
+        $majors = Major::all();
+        $years = Year::all();
+        $employees = Employee::all();
+        $offices = Office::all();
+        $statuses = Status::all();
+        $types = Type::all();
 
-        return view('admin.app-management', compact('students', 'employees'));
+        return view('admin.app-management', compact(
+            'students',
+            'campuses',
+            'colleges',
+            'programs',
+            'majors',
+            'years',
+            'employees',
+            'offices',
+            'statuses',
+            'types'
+        ));
     }
+
 
     public function importEmployees(Request $request)
     {
@@ -149,7 +183,6 @@ class AdminController extends Controller
         $user->role = null;
         $user->save();
 
-        return redirect()->route('admin.user-management')->with('success', 'User role removed successfully.');
+        return redirect()->route('admin.user-management')->with('success', 'User access removed successfully.');
     }
 }
-
