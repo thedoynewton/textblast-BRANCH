@@ -486,24 +486,41 @@
                 }
             }
 
-            function filterByCampus(tableId, filterId) {
-                var table, tr, td, i, txtValue, campusFilter;
-                table = document.getElementById(tableId);
-                tr = table.getElementsByTagName("tr");
-                campusFilter = document.getElementById(filterId).value.toUpperCase();
+            function filterByCampus() {
+    var campusFilter = document.getElementById('studentsCampusFilter').value.toUpperCase();
+    
+    // List of all table IDs with their respective campus column index
+    var tables = {
+        'studentsTable': 6,  // Hidden campus column index in students table
+        'collegeTable': 1,   // Hidden campus column index in college table
+        'programTable': 1,   // Hidden campus column index in program table
+        'majorTable': 1,     // Hidden campus column index in major table
+        'yearTable': 1,      // Hidden campus column index in year table
+        'employeesTable': 5, // Hidden campus column index in employees table
+        'officeTable': 1,    // Hidden campus column index in office table
+        'statusTable': 1,    // Hidden campus column index in status table
+        'typeTable': 1       // Hidden campus column index in type table
+    };
 
-                for (i = 1; i < tr.length; i++) {
-                    td = tr[i].getElementsByTagName("td")[6]; // 6 is the index for the hidden campus column
-                    if (td) {
-                        txtValue = td.textContent || td.innerText;
-                        if (campusFilter === "" || txtValue.toUpperCase() === campusFilter) {
-                            tr[i].style.display = ""; // Show the row if match is found or no filter is applied
-                        } else {
-                            tr[i].style.display = "none"; // Hide the row if it doesn't match the filter
-                        }
-                    }
+    for (var tableId in tables) {
+        var table = document.getElementById(tableId);
+        var tr = table.getElementsByTagName('tr');
+        var campusColumnIndex = tables[tableId];
+
+        for (var i = 1; i < tr.length; i++) { // Skip the header row
+            var td = tr[i].getElementsByTagName('td')[campusColumnIndex];
+            if (td) {
+                var txtValue = td.textContent || td.innerText;
+                if (campusFilter === "" || txtValue.toUpperCase() === campusFilter) {
+                    tr[i].style.display = ""; // Show the row if match is found or no filter is applied
+                } else {
+                    tr[i].style.display = "none"; // Hide the row if it doesn't match the filter
                 }
             }
+        }
+    }
+}
+
 
             // Automatically open the first section on page load
             document.addEventListener("DOMContentLoaded", function () {
