@@ -22,38 +22,28 @@
     <form action="{{ route('admin.broadcastToRecipients') }}" method="POST">
         @csrf
 
-        <!-- Broadcast Type Selection -->
-        <div class="mb-4">
-            <label for="broadcast_type" class="block text-sm font-medium text-gray-700">Broadcast To</label>
-            <select name="broadcast_type" id="broadcast_type" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm" onchange="toggleFilters()">
-                <option value="all">All Recipients</option>
-                <option value="students">Students</option>
-                <option value="employees">Employees</option>
-            </select>
-        </div>
-
-        <!-- Campus Selection (Always Visible) -->
-        <div class="mb-4" id="campus_filter">
-            <label for="campus" class="block text-sm font-medium text-gray-700">Campus</label>
-            <select name="campus" id="campus" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm" onchange="updateDependentFilters()">
-                <option value="">Select Campus</option>
-                @foreach($campuses as $campus)
-                <option value="{{ $campus->campus_id }}">{{ $campus->campus_name }}</option>
-                @endforeach
-            </select>
-        </div>
-
-        <!-- Additional Filters for "All Recipients" -->
-        <!-- <div id="all_recipients_filters" style="display:none;">
-            <div class="mb-4">
-                <label for="recipient_type" class="block text-sm font-medium text-gray-700">Recipient Type</label>
-                <select name="recipient_type" id="recipient_type" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm">
-                    <option value="students">All Students</option>
-                    <option value="employees">All Employees</option>
-                    <option value="both">Both Students and Employees</option>
+        <div class="flex space-x-4 mb-4">
+            <!-- Broadcast Type Selection -->
+            <div class="w-1/2">
+                <label for="broadcast_type" class="block mb-2 text-sm font-medium text-gray-700">Select Recipient</label>
+                <select name="broadcast_type" id="broadcast_type" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm px-3 py-2" onchange="toggleFilters()">
+                    <option value="all">All Recipients</option>
+                    <option value="students">Students</option>
+                    <option value="employees">Employees</option>
                 </select>
             </div>
-        </div> -->
+
+            <!-- Campus Selection (Always Visible) -->
+            <div class="w-1/2" id="campus_filter">
+                <label for="campus" class="block mb-2 text-sm font-medium text-gray-700">Select Campus</label>
+                <select name="campus" id="campus" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm px-3 py-2" onchange="updateDependentFilters()">
+                    <option value="">All Campus</option>
+                    @foreach($campuses as $campus)
+                    <option value="{{ $campus->campus_id }}">{{ $campus->campus_name }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
 
         <!-- Student-specific Filters -->
         <div id="student_filters" style="display:none;">
@@ -74,7 +64,7 @@
             <div class="mb-4">
                 <label for="year" class="block text-sm font-medium text-gray-700">Year</label>
                 <select name="year" id="year" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm">
-                    <option value="">Select Year</option>
+                    <option value="">All Year Level</option>
                 </select>
             </div>
         </div>
@@ -84,28 +74,28 @@
             <div class="mb-4">
                 <label for="office" class="block text-sm font-medium text-gray-700">Office</label>
                 <select name="office" id="office" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm">
-                    <option value="">Select Office</option>
+                    <option value="">All Office</option>
                 </select>
             </div>
 
             <div class="mb-4">
                 <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
                 <select name="status" id="status" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm">
-                    <option value="">Select Status</option>
+                    <option value="">All Employment Status</option>
                 </select>
             </div>
 
             <div class="mb-4">
                 <label for="type" class="block text-sm font-medium text-gray-700">Type</label>
                 <select name="type" id="type" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm">
-                    <option value="">Select Type</option>
+                    <option value="">All Employment Type</option>
                 </select>
             </div>
         </div>
 
         <!-- Message Input -->
         <div class="mb-4">
-            <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
+            <label for="message" class="block mb-2 text-sm font-medium text-gray-700">Message</label>
             <textarea name="message" id="message" placeholder="Enter your message here ..." rows="4" class="block w-full mt-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50 focus:ring-indigo-300 p-2 text-sm overflow-y-auto resize-none" style="height: 14rem"></textarea>
         </div>
 
