@@ -8,9 +8,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Standard favicon -->
-    <link rel="icon" href="/images/SePhi Final Icon 1.png" type="image/png" sizes="32x32">
-    <link rel="icon" href="/images/SePhi Final Icon 1.png" type="image/png" sizes="64x64">
-    <link rel="icon" href="/images/SePhi Final Icon 1.png" type="image/png" sizes="128x128">
+    <link rel="icon" href="/images/SePhi Favicon.png" type="image/png" sizes="32x32">
+    <link rel="icon" href="/images/SePhi Favicon.png" type="image/png" sizes="64x64">
+    <link rel="icon" href="/images/SePhi Favicon.png" type="image/png" sizes="128x128">
+
 
     <link rel="stylesheet" href="app.css">
     <style>
@@ -151,7 +152,7 @@
         <!-- Menu -->
         <div>
             <div class="flex items-center my-5 align-center pl-4">
-                <img src="/images/SePhi Final Icon 1.png" class="w-16 h-auto" />
+                <img src="/images/SePhi icon.png" class="w-16 h-auto" />
                 <h1 class="text-gradient font-semibold text-xl">Text Broadcasting</h1>
             </div>
 
