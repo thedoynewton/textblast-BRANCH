@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Messages')
+@section('title', 'Broadcast Message')
 
 @section('content')
 <!-- Display Success or Error Messages -->
@@ -41,7 +41,7 @@
                 <!-- Campus Dropdown (Always Visible) -->
                 <div class="flex-grow">
                     <label for="campus" class="block text-sm font-medium text-gray-700">Campus</label>
-                    <select name="campus" id="campus" class="block w-[16rem] mt-1 border border-gray-300 rounded-md shadow-sm p-2">
+                    <select name="campus" id="campus" class="block w-[13rem] mt-1 border border-gray-300 rounded-md shadow-sm p-2">
                         <option value="" disabled selected>Select Campus</option>
                         <option value="all">All Campuses</option>
                         @foreach ($campuses as $campus)
@@ -55,7 +55,7 @@
                     <!-- College Dropdown -->
                     <div class="flex-grow">
                         <label for="college" class="block text-sm font-medium text-gray-700">College</label>
-                        <select name="college" id="college" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm p-2">
+                        <select name="college" id="college" class="block mt-1 border border-gray-300 rounded-md shadow-sm p-2" style="width: 20rem;">
                             <option value="" disabled selected>Select College</option>
                             <option value="all">All Colleges</option>
                         </select>
@@ -63,8 +63,8 @@
 
                     <!-- Program Dropdown -->
                     <div class="flex-grow">
-                        <label for="program" class="block text-sm font-medium text-gray-700">Program</label>
-                        <select name="program" id="program" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm p-2">
+                        <label for="program" class="block text-sm font-medium text-gray-700">Academic Program</label>
+                        <select name="program" id="program" class="block mt-1 border border-gray-300 rounded-md shadow-sm p-2" style="width: 20rem;">
                             <option value="" disabled selected>Select Program</option>
                             <option value="all">All Programs</option>
                         </select>
@@ -73,7 +73,7 @@
                     <!-- Year Dropdown -->
                     <div class="flex-grow">
                         <label for="year" class="block text-sm font-medium text-gray-700">Year</label>
-                        <select name="year" id="year" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm p-2">
+                        <select name="year" id="year" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm p-2" style="width: 8rem;">
                             <option value="" disabled selected>Select Year</option>
                             <option value="all">All Year Levels</option>
                         </select>
@@ -85,7 +85,7 @@
                     <!-- Office Dropdown -->
                     <div class="flex-grow">
                         <label for="office" class="block text-sm font-medium text-gray-700">Office</label>
-                        <select name="office" id="office" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm p-2">
+                        <select name="office" id="office" class="block mt-1 border border-gray-300 rounded-md shadow-sm p-2" style="width: 20rem;">
                             <option value="" disabled selected>Select Office</option>
                             <option value="all">All Offices</option>
                         </select>
@@ -94,7 +94,7 @@
                     <!-- Status Dropdown -->
                     <div class="flex-grow">
                         <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
-                        <select name="status" id="status" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm p-2">
+                        <select name="status" id="status" class="block mt-1 border border-gray-300 rounded-md shadow-sm p-2" style="width: 14rem;">
                             <option value="" disabled selected>Select Status</option>
                             <option value="all">All Statuses</option>
                         </select>
@@ -103,7 +103,7 @@
                     <!-- Type Dropdown -->
                     <div class="flex-grow">
                         <label for="type" class="block text-sm font-medium text-gray-700">Type</label>
-                        <select name="type" id="type" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm p-2">
+                        <select name="type" id="type" class="block mt-1 border border-gray-300 rounded-md shadow-sm p-2" style="width: 14rem;">
                             <option value="" disabled selected>Select Type</option>
                             <option value="all">All Types</option>
                         </select>
@@ -121,7 +121,7 @@
         </div>
 
         <div class="flex justify-end">
-            <button type="submit" class="bg-yellow-500 text-white px-4 py-2 rounded-lg">Review Message</button>
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Review Message</button>
         </div>
     </form>
 
@@ -173,6 +173,9 @@
             } else {
                 // Additional handling for the "ALL" tab
                 document.getElementById('campus').parentElement.style.flexGrow = 1;
+
+                // Add the active class to the "ALL" tab by default
+                document.querySelector('button[data-value="all"]').classList.add('border-b-2', 'border-indigo-500', 'text-indigo-500');
             }
 
             // Clear dropdown values when switching tabs
