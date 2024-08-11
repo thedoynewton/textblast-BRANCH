@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Broadcast Message')
+@section('title', 'Broadcast Messages')
 
 @section('content')
 <!-- Display Success or Error Messages -->
@@ -38,10 +38,10 @@
         <!-- Filters Container -->
         <div class="mb-4">
             <div class="flex space-x-4">
-                <!-- Campus Dropdown (Always Visible) -->
-                <div class="flex-grow">
+                <!-- Campus Selection (Always Visible) -->
+                <div class="flex-grow" id="campus_filter">
                     <label for="campus" class="block text-sm font-medium text-gray-700">Campus</label>
-                    <select name="campus" id="campus" class="block w-[13rem] mt-1 border border-gray-300 rounded-md shadow-sm p-2">
+                    <select name="campus" id="campus" class="block mt-1 border border-gray-300 rounded-md shadow-sm p-2" style="width: 13rem;">
                         <option value="" disabled selected>Select Campus</option>
                         <option value="all">All Campuses</option>
                         @foreach ($campuses as $campus)
@@ -50,60 +50,66 @@
                     </select>
                 </div>
 
-                <!-- Student-specific Filters (Hidden by Default) -->
+                <!-- Student-specific Filters -->
                 <div id="student_filters" class="flex space-x-4 w-full" style="display: none;">
-                    <!-- College Dropdown -->
                     <div class="flex-grow">
                         <label for="college" class="block text-sm font-medium text-gray-700">College</label>
-                        <select name="college" id="college" class="block mt-1 border border-gray-300 rounded-md shadow-sm p-2" style="width: 20rem;">
+                        <select name="college" id="college" style="width: 20rem;"
+                            class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm p-2"
+                            onchange="updateProgramDropdown()">
                             <option value="" disabled selected>Select College</option>
                             <option value="all">All Colleges</option>
                         </select>
                     </div>
 
-                    <!-- Program Dropdown -->
                     <div class="flex-grow">
                         <label for="program" class="block text-sm font-medium text-gray-700">Academic Program</label>
-                        <select name="program" id="program" class="block mt-1 border border-gray-300 rounded-md shadow-sm p-2" style="width: 20rem;">
+                        <select name="program" id="program" style="width: 20rem;"
+                            class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm p-2">
                             <option value="" disabled selected>Select Program</option>
                             <option value="all">All Programs</option>
                         </select>
                     </div>
 
-                    <!-- Year Dropdown -->
                     <div class="flex-grow">
                         <label for="year" class="block text-sm font-medium text-gray-700">Year</label>
-                        <select name="year" id="year" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm p-2" style="width: 8rem;">
+                        <select name="year" id="year" style="width: 8rem;"
+                            class="block mt-1 border border-gray-300 rounded-md shadow-sm p-2">
                             <option value="" disabled selected>Select Year</option>
                             <option value="all">All Year Levels</option>
+                            @foreach ($years as $year)
+                            <option value="{{ $year->year_id }}">{{ $year->year_name }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
 
-                <!-- Employee-specific Filters (Hidden by Default) -->
+                <!-- Employee-specific Filters -->
                 <div id="employee_filters" class="flex space-x-4 w-full" style="display: none;">
-                    <!-- Office Dropdown -->
                     <div class="flex-grow">
                         <label for="office" class="block text-sm font-medium text-gray-700">Office</label>
-                        <select name="office" id="office" class="block mt-1 border border-gray-300 rounded-md shadow-sm p-2" style="width: 20rem;">
+                        <select name="office" id="office" style="width: 20rem;"
+                            class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm p-2"
+                            onchange="updateTypeDropdown()">
                             <option value="" disabled selected>Select Office</option>
                             <option value="all">All Offices</option>
                         </select>
                     </div>
 
-                    <!-- Status Dropdown -->
                     <div class="flex-grow">
                         <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
-                        <select name="status" id="status" class="block mt-1 border border-gray-300 rounded-md shadow-sm p-2" style="width: 14rem;">
+                        <select name="status" id="status" style="width: 14rem;"
+                            class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm p-2"
+                            onchange="updateTypeDropdown()">
                             <option value="" disabled selected>Select Status</option>
                             <option value="all">All Statuses</option>
                         </select>
                     </div>
 
-                    <!-- Type Dropdown -->
                     <div class="flex-grow">
                         <label for="type" class="block text-sm font-medium text-gray-700">Type</label>
-                        <select name="type" id="type" class="block mt-1 border border-gray-300 rounded-md shadow-sm p-2" style="width: 14rem;">
+                        <select name="type" id="type" style="width: 14rem;"
+                            class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm p-2">
                             <option value="" disabled selected>Select Type</option>
                             <option value="all">All Types</option>
                         </select>
@@ -131,6 +137,10 @@
             // Initialize filters on page load
             toggleFilters();
 
+            // Highlight the "ALL" tab by default
+            const allTabButton = document.querySelector('.tab-button[data-value="all"]');
+            allTabButton.classList.add('border-b-2', 'border-indigo-500', 'text-indigo-500');
+
             // Add event listeners to the tab buttons
             document.querySelectorAll('.tab-button').forEach(function(button) {
                 button.addEventListener('click', function() {
@@ -144,6 +154,9 @@
                             'text-indigo-500');
                     });
                     this.classList.add('border-b-2', 'border-indigo-500', 'text-indigo-500');
+
+                    // Reset the Campus dropdown to its default placeholder
+                    resetCampusDropdown();
 
                     // Toggle the filters based on the selected tab
                     toggleFilters();
@@ -170,12 +183,6 @@
                 studentFilters.style.display = 'flex';
             } else if (broadcastType === 'employees') {
                 employeeFilters.style.display = 'flex';
-            } else {
-                // Additional handling for the "ALL" tab
-                document.getElementById('campus').parentElement.style.flexGrow = 1;
-
-                // Add the active class to the "ALL" tab by default
-                document.querySelector('button[data-value="all"]').classList.add('border-b-2', 'border-indigo-500', 'text-indigo-500');
             }
 
             // Clear dropdown values when switching tabs
@@ -185,6 +192,11 @@
             clearDropdownOptions('office');
             clearDropdownOptions('status');
             clearDropdownOptions('type');
+        }
+
+        function resetCampusDropdown() {
+            var campusSelect = document.getElementById('campus');
+            campusSelect.value = ''; // Reset to default "Select Campus"
         }
 
         function updateDependentFilters() {
