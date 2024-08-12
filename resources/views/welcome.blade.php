@@ -6,9 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Welcome</title>
     <!-- Standard favicon -->
-    <link rel="icon" href="/images/SePhi Final Icon 1.png" type="image/png" sizes="32x32">
-    <link rel="icon" href="/images/SePhi Final Icon 1.png" type="image/png" sizes="64x64">
-    <link rel="icon" href="/images/SePhi Final Icon 1.png" type="image/png" sizes="128x128">
+    <link rel="icon" href="/images/SePhi Icon.png" type="image/png" sizes="32x32">
+    <link rel="icon" href="/images/SePhi Icon.png" type="image/png" sizes="64x64">
+    <link rel="icon" href="/images/SePhi Icon.png" type="image/png" sizes="128x128">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .bg-opacity-50 {
@@ -52,7 +52,7 @@
                 @endif
                 @guest
                     <form>
-                        <img src="/images/SePhi Final Icon 1.png" class="w-1/2 h-auto mx-auto"/>
+                        <img src="/images/SePhi Icon.png" class="w-1/2 h-auto mx-auto"/>
                         <h1 class="font-bold text-4xl text-center">Welcome to USeP</h1>
                         <h1 class="font-semibold text-2xl mb-8 text-center">Text Broadcasting System</h1>
                         <div class="py-2">
