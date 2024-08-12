@@ -3,6 +3,13 @@
 @section('title', 'App Management')
 
 @section('content')
+
+
+        {{-- Import Button --}}
+        <button class="absolute right-11 top-10 bg-green-500 py-2 px-4 text-white font-bold border rounded-lg shadow-md hover:bg-green-600 hover:shadow-lg hover:text-gray-100">
+        Import
+        </button>
+
     <div class="container mx-auto p-4">
         <div class="bg-white p-8 rounded-lg shadow-lg">
 
