@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FilterController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\MessageTemplateController;
 use App\Http\Controllers\SubAdminController;
 use Illuminate\Support\Facades\Route;
 

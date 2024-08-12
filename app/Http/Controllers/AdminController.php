@@ -12,6 +12,7 @@ use App\Models\Program;
 use App\Models\Student;
 use App\Models\Employee;
 use App\Models\Major;
+use App\Models\MessageTemplate;
 use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -25,19 +26,19 @@ class AdminController extends Controller
     }
 
     public function messages()
-    {
-        $campuses = Campus::all();
-        $colleges = College::all();
-        $programs = Program::all();
-        $years = Year::all();
-        $offices = Office::all();
-        $statuses = Status::all();
-        $types = Type::all();
+{
+    $campuses = Campus::all();
+    $colleges = College::all();
+    $programs = Program::all();
+    $years = Year::all();
+    $offices = Office::all();
+    $statuses = Status::all();
+    $types = Type::all();
+    $messageTemplates = MessageTemplate::all(); // Add this line to fetch all message templates
 
-        // Convert the collections to arrays for better visibility
-        
-        return view('admin.messages', compact('campuses', 'colleges', 'programs', 'years', 'offices', 'statuses', 'types'));
-    }
+    return view('admin.messages', compact('campuses', 'colleges', 'programs', 'years', 'offices', 'statuses', 'types', 'messageTemplates'));
+}
+
 
     public function broadcastMessages(Request $request)
     {
@@ -49,7 +50,6 @@ class AdminController extends Controller
         $apiKey = config('services.movider.api_key');
         $apiSecret = config('services.movider.api_secret');
 
-        // Log the API key and secret for debugging purposes (do not do this in production)
         Log::info('Movider API Key: ' . $apiKey);
         Log::info('Movider API Secret: ' . $apiSecret);
 
@@ -60,7 +60,6 @@ class AdminController extends Controller
             'text' => $message,
         ]);
 
-        // Log the response for debugging
         Log::info('Movider API Response: ', $response->json());
 
         return $response;
@@ -78,36 +77,37 @@ class AdminController extends Controller
     }
 
     public function appManagement()
-    {
-        $students = Student::all();
-        $campuses = Campus::all();
-        $colleges = College::all();
-        $programs = Program::all();
-        $majors = Major::all();
-        $years = Year::all();
-        $employees = Employee::all();
-        $offices = Office::all();
-        $statuses = Status::all();
-        $types = Type::all();
+{
+    $students = Student::all();
+    $campuses = Campus::all();
+    $colleges = College::all();
+    $programs = Program::all();
+    $majors = Major::all();
+    $years = Year::all();
+    $employees = Employee::all();
+    $offices = Office::all();
+    $statuses = Status::all();
+    $types = Type::all();
+    $messageTemplates = MessageTemplate::all(); // Add this line to fetch all message templates
 
-        return view('admin.app-management', compact(
-            'students',
-            'campuses',
-            'colleges',
-            'programs',
-            'majors',
-            'years',
-            'employees',
-            'offices',
-            'statuses',
-            'types'
-        ));
-    }
+    return view('admin.app-management', compact(
+        'students',
+        'campuses',
+        'colleges',
+        'programs',
+        'majors',
+        'years',
+        'employees',
+        'offices',
+        'statuses',
+        'types',
+        'messageTemplates' // Pass the variable to the view
+    ));
+}
 
 
     public function importEmployees(Request $request)
     {
-        // Handle the import functionality here
         return redirect()->route('admin.app-management')->with('success', 'Employees imported successfully.');
     }
 
