@@ -54,7 +54,7 @@
                 <div id="student_filters" class="flex space-x-4 w-full" style="display: none;">
                     <div class="flex-grow">
                         <label for="college" class="block text-sm font-medium text-gray-700">College</label>
-                        <select name="college" id="college" style="width: 20rem;"
+                        <select name="college" id="college" style="width: 21rem;"
                             class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm p-2"
                             onchange="updateProgramDropdown()">
                             <option value="" disabled selected>Select College</option>
@@ -73,7 +73,7 @@
 
                     <div class="flex-grow">
                         <label for="year" class="block text-sm font-medium text-gray-700">Year</label>
-                        <select name="year" id="year" style="width: 8rem;"
+                        <select name="year" id="year" style="width: 7.9rem;"
                             class="block mt-1 border border-gray-300 rounded-md shadow-sm p-2">
                             <option value="" disabled selected>Select Year</option>
                             <option value="all">All Year Levels</option>
@@ -88,7 +88,7 @@
                 <div id="employee_filters" class="flex space-x-4 w-full" style="display: none;">
                     <div class="flex-grow">
                         <label for="office" class="block text-sm font-medium text-gray-700">Office</label>
-                        <select name="office" id="office" style="width: 20rem;"
+                        <select name="office" id="office" style="width: 21rem;"
                             class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm p-2"
                             onchange="updateTypeDropdown()">
                             <option value="" disabled selected>Select Office</option>
