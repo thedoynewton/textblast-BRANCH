@@ -1,5 +1,6 @@
 import './bootstrap';
 
+// Directly embedded JavaScript
 document.addEventListener('DOMContentLoaded', function () {
     // Initialize filters on page load
     toggleFilters();
@@ -34,6 +35,14 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('campus').addEventListener('change', updateDependentFilters);
     document.getElementById('office').addEventListener('change', updateTypeDropdown);
     document.getElementById('status').addEventListener('change', updateTypeDropdown);
+    document.getElementById('college').addEventListener('change', updateProgramDropdown);
+
+
+    // Add event listener for template selection
+    document.getElementById('template').addEventListener('change', function () {
+        const templateContent = this.value;
+        document.getElementById('message').value = templateContent;
+    });
 });
 
 function toggleFilters() {
@@ -119,19 +128,19 @@ function clearDropdownOptions(selectId) {
 
 function updateProgramDropdown() {
     var collegeId = document.getElementById('college').value;
+    console.log(`Selected collegeId: ${collegeId}`);
 
     // Reset the program dropdown
     clearDropdownOptions('program');
 
-    if (collegeId === 'all') {
-        return;
-    }
+    if (collegeId === 'all') return;
 
     if (collegeId) {
-        // Make an AJAX request to get the dependent programs based on the selected college
+        console.log(`Making fetch request to /api/filters/college/${collegeId}/programs`);
         fetch(`/api/filters/college/${collegeId}/programs`)
             .then(response => response.json())
             .then(data => {
+                console.log("Received program data:", data);
                 updateSelectOptions('program', data.programs);
             });
     }
