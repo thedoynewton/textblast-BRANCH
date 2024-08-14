@@ -148,13 +148,21 @@
                         </thead>
                         <tbody>
                             @foreach ($messageLogs as $log)
-                                <tr class="hover:bg-gray-50 transition duration-150 ease-in-out">
+                                <tr class="hover:bg-gray-50 transition duration-150 ease-in-out cursor-pointer"
+                                    onclick="toggleExpandRow(this)">
                                     <td class="py-3 px-4 border-b text-gray-600">{{ $log->user->name }}</td>
                                     <td class="py-3 px-4 border-b text-gray-600">{{ ucfirst($log->recipient_type) }}</td>
                                     <td class="py-3 px-4 border-b text-gray-600">{{ Str::limit($log->content, 50) }}</td>
                                     <td class="py-3 px-4 border-b text-gray-600">{{ ucfirst($log->schedule) }}</td>
                                     <td class="py-3 px-4 border-b text-gray-600">
                                         {{ $log->scheduled_at ? $log->scheduled_at->format('F j, Y g:i A') : $log->created_at->format('F j, Y g:i A') }}
+                                    </td>
+                                </tr>
+                                <tr class="expandable-row hidden">
+                                    <td colspan="5" class="py-3 px-4 border-b bg-gray-50 text-gray-600">
+                                        <div class="p-4">
+                                            <strong>Full Message Content:</strong> {{ $log->content }}<br>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
@@ -183,6 +191,11 @@
             evt.currentTarget.classList.add("border-blue-500");
             document.getElementById(tabName).classList.remove("hidden");
             evt.currentTarget.className += " border-blue-500";
+        }
+
+        function toggleExpandRow(row) {
+            const expandableRow = row.nextElementSibling;
+            expandableRow.classList.toggle('hidden');
         }
 
         // JavaScript to handle fetching, displaying, and searching contacts
