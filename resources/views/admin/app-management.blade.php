@@ -6,7 +6,7 @@
 
 
         {{-- Import Button --}}
-        <button class="absolute right-11 top-10 bg-green-500 py-2 px-4 text-white font-bold border rounded-lg shadow-md hover:bg-green-600 hover:shadow-lg hover:text-gray-100">
+        <button type="submit" class="btn btn-primary absolute right-11 top-10 bg-green-500 py-2 px-4 text-white font-bold border rounded-lg shadow-md hover:bg-green-600 hover:shadow-lg hover:text-gray-100">
         Import
         </button>
 
