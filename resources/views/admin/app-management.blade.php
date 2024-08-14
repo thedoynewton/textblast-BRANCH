@@ -4,11 +4,11 @@
 
 @section('content')
 
-
-        {{-- Import Button --}}
-        <button type="submit" class="btn btn-primary absolute right-11 top-10 bg-green-500 py-2 px-4 text-white font-bold border rounded-lg shadow-md hover:bg-green-600 hover:shadow-lg hover:text-gray-100">
+    {{-- Import Button --}}
+    <button type="submit"
+        class="btn btn-primary absolute right-11 top-10 bg-green-500 py-2 px-4 text-white font-bold border rounded-lg shadow-md hover:bg-green-600 hover:shadow-lg hover:text-gray-100">
         Import
-        </button>
+    </button>
 
     <div class="container mx-auto p-4">
         <div class="bg-white p-8 rounded-lg shadow-lg">
@@ -123,7 +123,10 @@
                             @endforeach
 
                             @if ($messageTemplates->isEmpty())
-                                <p class="text-center text-gray-500 mt-4">No message templates found.</p>
+                                <tr>
+                                    <td colspan="3" class="text-center py-4 text-gray-500">No message templates found.
+                                    </td>
+                                </tr>
                             @endif
                         </tbody>
                     </table>
@@ -132,28 +135,35 @@
 
             <!-- Message Logs Tab -->
             <div id="messageLogs" class="tab-content hidden">
-                <!-- Search Bar -->
-                <div class="mb-4">
-                    <label for="logsSearch" class="block text-sm font-medium text-gray-700">Search Logs</label>
-                    <input type="text" id="logsSearch" placeholder="Search message logs..."
-                        class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm">
-                </div>
-
-                <!-- Message Logs Table -->
                 <div class="overflow-x-auto overflow-y-auto max-h-96 mb-8">
                     <table id="messageLogsTable" class="min-w-full bg-white border border-gray-300 rounded-lg">
                         <thead class="bg-gray-100">
                             <tr>
-                                <th class="py-3 px-4 border-b font-medium text-gray-700">User ID</th>
-                                <th class="py-3 px-4 border-b font-medium text-gray-700">Sender Name</th>
-                                <th class="py-3 px-4 border-b font-medium text-gray-700">Recipient Name</th>
-                                <th class="py-3 px-4 border-b font-medium text-gray-700">Message Content</th>
-                                <th class="py-3 px-4 border-b font-medium text-gray-700">Status</th>
-                                <th class="py-3 px-4 border-b font-medium text-gray-700">Date Sent</th>
+                                <th class="py-3 px-4 border-b font-medium text-gray-700">Sent By</th>
+                                <th class="py-3 px-4 border-b font-medium text-gray-700">Recipient Type</th>
+                                <th class="py-3 px-4 border-b font-medium text-gray-700">Content</th>
+                                <th class="py-3 px-4 border-b font-medium text-gray-700">Schedule Type</th>
+                                <th class="py-3 px-4 border-b font-medium text-gray-700">Scheduled/Send Time</th>
                             </tr>
                         </thead>
-                        <tbody id="messageLogsTableBody">
-                            <!-- Rows will be populated by JavaScript -->
+                        <tbody>
+                            @foreach ($messageLogs as $log)
+                                <tr class="hover:bg-gray-50 transition duration-150 ease-in-out">
+                                    <td class="py-3 px-4 border-b text-gray-600">{{ $log->user->name }}</td>
+                                    <td class="py-3 px-4 border-b text-gray-600">{{ ucfirst($log->recipient_type) }}</td>
+                                    <td class="py-3 px-4 border-b text-gray-600">{{ Str::limit($log->content, 50) }}</td>
+                                    <td class="py-3 px-4 border-b text-gray-600">{{ ucfirst($log->schedule) }}</td>
+                                    <td class="py-3 px-4 border-b text-gray-600">
+                                        {{ $log->scheduled_at ? $log->scheduled_at->format('F j, Y g:i A') : $log->created_at->format('F j, Y g:i A') }}
+                                    </td>
+                                </tr>
+                            @endforeach
+
+                            @if ($messageLogs->isEmpty())
+                                <tr>
+                                    <td colspan="5" class="text-center py-4 text-gray-500">No message logs found.</td>
+                                </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div>
@@ -175,14 +185,12 @@
             evt.currentTarget.className += " border-blue-500";
         }
 
-        // JavaScript to handle fetching, displaying, and searching contacts and message logs
+        // JavaScript to handle fetching, displaying, and searching contacts
         document.addEventListener('DOMContentLoaded', function() {
             const campusSelect = document.getElementById('campus');
             const filterSelect = document.getElementById('filter');
             const contactsTableBody = document.getElementById('contactsTableBody');
             const contactsSearch = document.getElementById('contactsSearch');
-            const logsSearch = document.getElementById('logsSearch');
-            const messageLogsTableBody = document.getElementById('messageLogsTableBody');
 
             // Function to fetch and display contacts
             function fetchContacts() {
@@ -210,8 +218,7 @@
                             });
                         }
 
-                        searchTable(contactsSearch,
-                        contactsTableBody); // Apply search filter after fetching contacts
+                        searchTable(); // Apply search filter after fetching contacts
                     })
                     .catch(error => {
                         contactsTableBody.innerHTML =
@@ -219,43 +226,10 @@
                     });
             }
 
-            // Function to fetch and display message logs
-            function fetchMessageLogs() {
-                fetch(`/api/message-logs`)
-                    .then(response => response.json())
-                    .then(data => {
-                        messageLogsTableBody.innerHTML = ''; // Clear existing rows
-
-                        if (data.length === 0) {
-                            messageLogsTableBody.innerHTML =
-                                '<tr><td colspan="4" class="text-center py-4">No message logs found.</td></tr>';
-                        } else {
-                            data.forEach(log => {
-                                const row = `<tr class="hover:bg-gray-50 transition duration-150 ease-in-out">
-                                                <td class="py-3 px-4 border-b text-gray-600">${log.user_id}</td>
-                                                <td class="py-3 px-4 border-b text-gray-600">${log.user_name}</td>
-                                                <td class="py-3 px-4 border-b text-gray-600">${log.recipient_name}</td>
-                                                <td class="py-3 px-4 border-b text-gray-600">${log.message_content}</td>
-                                                <td class="py-3 px-4 border-b text-gray-600">${log.status}</td>
-                                                <td class="py-3 px-4 border-b text-gray-600">${log.date_sent}</td>
-                                            </tr>`;
-                                messageLogsTableBody.insertAdjacentHTML('beforeend', row);
-                            });
-                        }
-
-                        searchTable(logsSearch,
-                        messageLogsTableBody); // Apply search filter after fetching logs
-                    })
-                    .catch(error => {
-                        messageLogsTableBody.innerHTML =
-                            '<tr><td colspan="4" class="text-center py-4 text-red-500">Error fetching message logs.</td></tr>';
-                    });
-            }
-
             // Function to filter the table based on search input
-            function searchTable(searchInput, tableBody) {
-                const input = searchInput.value.toUpperCase();
-                const tr = tableBody.getElementsByTagName('tr');
+            function searchTable() {
+                const input = contactsSearch.value.toUpperCase();
+                const tr = contactsTableBody.getElementsByTagName('tr');
 
                 for (let i = 0; i < tr.length; i++) {
                     let showRow = false;
@@ -273,15 +247,13 @@
                 }
             }
 
-            // Event listeners to trigger fetching contacts and message logs
+            // Event listeners to trigger fetching contacts
             campusSelect.addEventListener('change', fetchContacts);
             filterSelect.addEventListener('change', fetchContacts);
-            contactsSearch.addEventListener('keyup', () => searchTable(contactsSearch, contactsTableBody));
-            logsSearch.addEventListener('keyup', () => searchTable(logsSearch, messageLogsTableBody));
+            contactsSearch.addEventListener('keyup', searchTable);
 
             // Initial fetch on page load
             fetchContacts();
-            fetchMessageLogs();
         });
     </script>
 @endsection
