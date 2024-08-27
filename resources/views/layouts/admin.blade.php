@@ -12,13 +12,11 @@
     <link rel="icon" href="/images/SePhi Favicon.png" type="image/png" sizes="64x64">
     <link rel="icon" href="/images/SePhi Favicon.png" type="image/png" sizes="128x128">
 
-
-    <link rel="stylesheet" href="app.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
         :root {
-            --primary-bg: ##C3CBDC;
+            --primary-bg: #C3CBDC;
             --primary-text: #000000;
             --secondary-bg: #FFFFFF;
             --secondary-text: #757575;
@@ -125,7 +123,6 @@
             --secondary-text: #000000;
         }
     </style>
-
     <script>
         function toggleDropdown() {
             document.getElementById("dropdown").classList.toggle("hidden");
@@ -151,8 +148,8 @@
     <div class="bg-white w-73 flex flex-col justify-between fixed h-full z-50">
         <!-- Menu -->
         <div>
-            <div class="flex items-center my-5 align-center pl-4">
-                <img src="/images/SePhi icon.png" class="w-16 h-auto" />
+            <div class="flex items-center my-5 align-center pl-6">
+                <img src="/images/SePhi Favicon.png" class="w-14 h-auto pr-2" />
                 <h1 class="text-gradient font-semibold text-xl">Text Broadcasting</h1>
             </div>
 
@@ -169,22 +166,17 @@
                     <div id="dropdown" class="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg hidden">
                         <a href="{{ url('logout') }}" class="dropdown-item text-gray-800 hover:bg-gray-200">Logout</a>
                         <hr class="border-t-2 border-gray-200 my-2">
-                        <button onclick="setTheme('light')" class="dropdown-item text-gray-800 hover:bg-gray-200">Light
-                            Theme</button>
-                        <button onclick="setTheme('dark')" class="dropdown-item text-gray-800 hover:bg-gray-200">Dark
-                            Theme</button>
-                        <button onclick="setTheme('rosyred')" class="dropdown-item text-gray-800 hover:bg-gray-200">Rosy
-                            Red</button>
+                        <button onclick="setTheme('light')" class="dropdown-item text-gray-800 hover:bg-gray-200">Light Theme</button>
+                        <button onclick="setTheme('dark')" class="dropdown-item text-gray-800 hover:bg-gray-200">Dark Theme</button>
+                        <button onclick="setTheme('rosyred')" class="dropdown-item text-gray-800 hover:bg-gray-200">Rosy Red</button>
                         <button onclick="setTheme('slimegreen')" class="dropdown-item text-gray-800 hover:bg-gray-200">Slime Green</button>
-                        <button onclick="setTheme('bluesky')" class="dropdown-item text-gray-800 hover:bg-gray-200">Blue
-                            Sky</button>
+                        <button onclick="setTheme('bluesky')" class="dropdown-item text-gray-800 hover:bg-gray-200">Blue Sky</button>
                     </div>
                 </div>
             </div>
 
             <hr class="my-4 border-t-2 border-gray-200 w-full">
 
-            <!-- Navigation Links -->
             <ul class="mt-5">
                 <li class="{{ request()->routeIs('admin.dashboard') ? 'button-selected font-bold' : 'button-default button-hover font-normal' }} my-3">
                     <a href="{{ route('admin.dashboard') }}" class="px-10 py-3 flex items-center w-full h-full text-lg">
@@ -265,8 +257,8 @@
         <div class="absolute w-full h-36 shadow-md bg-primary z-0"></div>
         <div class="relative flex-1 p-8">
             <!-- Page Content -->
-            <h1 class="text-2xl font-semibold mb-4 text-primary">@yield('title')</h1>
-            <div class="mt-10">
+            <h1 class="text-2xl font-semibold mb-4 text-white">@yield('title')</h1>
+            <div class="">
                 @yield('content')
             </div>
         </div>

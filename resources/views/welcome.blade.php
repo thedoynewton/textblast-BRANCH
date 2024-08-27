@@ -5,10 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Welcome</title>
-    <!-- Standard favicon -->
-    <link rel="icon" href="/images/SePhi Icon.png" type="image/png" sizes="32x32">
-    <link rel="icon" href="/images/SePhi Icon.png" type="image/png" sizes="64x64">
-    <link rel="icon" href="/images/SePhi Icon.png" type="image/png" sizes="128x128">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .bg-opacity-50 {
