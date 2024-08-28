@@ -5,7 +5,6 @@
 @section('content')
 <div class="container mx-auto">
     <div class="bg-white p-6 rounded-lg shadow-md">
-        <h1 class="text-3xl font-bold mb-6">Analytics</h1>
 
         <!-- Date Range Filter -->
         <div class="mb-4">
@@ -39,80 +38,32 @@
                 <h2 class="text-xl font-bold">Remaining Balance</h2>
                 <p class="text-2xl font-semibold" id="remaining-balance">{{ $balance }}</p>
             </div>
-            
+
         </div>
 
         <!-- Chart View -->
         <div class="mt-8">
-            <h2 class="text-xl font-bold mb-4">Messages Sent Over Time</h2>
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold">Messages Sent Over Time</h2>
+                <div class="relative inline-block text-left">
+                    <button id="exportChartButton" class="inline-flex justify-center w-full rounded-md border-gray-300 shadow-sm px-4 py-2 bg-blue-500 text-white text-sm font-medium hover:bg-blue-700">
+                        Export Chart
+                    </button>
+                    <div id="exportDropdown" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none hidden">
+                        <div class="py-1">
+                            <a href="#" id="exportPNG" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Export as PNG</a>
+                            <a href="#" id="exportExcel" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Export as Excel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <canvas id="messagesChart" height="100"></canvas>
         </div>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const dateRangeSelect = document.getElementById('date-range');
-
-        function updateAnalytics() {
-            const dateRange = dateRangeSelect.value;
-
-            fetch(`/api/analytics?date_range=${dateRange}`)
-                .then(response => response.json())
-                .then(data => {
-                    // Update the numbers
-                    document.getElementById('total-sent').textContent = data.total_sent;
-                    document.getElementById('total-failed').textContent = data.total_failed;
-                    document.getElementById('total-scheduled').textContent = data.total_scheduled;
-                    document.getElementById('total-immediate').textContent = data.total_immediate;
-                    document.getElementById('remaining-balance').textContent = data.balance;
-
-                    // Update the chart
-                    updateChart(data.chart_data);
-                })
-                .catch(error => console.error('Error fetching analytics data:', error));
-        }
-
-        const ctx = document.getElementById('messagesChart').getContext('2d');
-        let messagesChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: [],
-                datasets: [{
-                    label: 'Messages Sent',
-                    data: [],
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                }]
-            },
-            options: {
-                scales: {
-                    x: {
-                        type: 'category',
-                        time: {
-                            unit: 'day'
-                        },
-                    },
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-
-        function updateChart(chartData) {
-            messagesChart.data.labels = chartData.labels;
-            messagesChart.data.datasets[0].data = chartData.data;
-            messagesChart.update();
-        }
-
-        // Fetch data on load
-        updateAnalytics();
-
-        // Fetch data on date range change
-        dateRangeSelect.addEventListener('change', updateAnalytics);
-    });
-</script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.0.0/docx.min.js"></script>
+@vite(['resources/js/analytics.js'])
 @endsection

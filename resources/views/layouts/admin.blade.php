@@ -122,7 +122,18 @@
             --secondary-bg: #a7cdff;
             --secondary-text: #000000;
         }
+
+        /* Export Button for Analytics Page */
+        #exportChartButton {
+            margin-right: 0;
+        }
+
+        #exportDropdown {
+            top: 40px;
+            /* Adjust this value if needed to better align the dropdown */
+        }
     </style>
+
     <script>
         function toggleDropdown() {
             document.getElementById("dropdown").classList.toggle("hidden");
