@@ -428,6 +428,27 @@ class MessageController extends Controller
         SendScheduledMessage::dispatch($data, $userId)->delay($scheduledAt);
     }
 
+    public function cancelScheduledMessage($id)
+    {
+        $messageLog = MessageLog::find($id);
+
+        if (!$messageLog || $messageLog->status !== 'Pending') {
+            return redirect()->route('admin.app-management')
+                ->with('error', 'Message cannot be canceled because it has already been sent, canceled, or does not exist.');
+        }
+
+        // Set the status to 'Cancelled' and update the cancelled_at timestamp
+        $messageLog->status = 'Cancelled';
+        $messageLog->cancelled_at = now(); // Set the current timestamp
+        $messageLog->save();
+
+        // Log the cancellation
+        Log::info("Scheduled message [ID: {$messageLog->id}] has been cancelled.");
+
+        return redirect()->route('admin.app-management')
+            ->with('success', 'Scheduled message has been canceled successfully.');
+    }
+
     public function getMessageLogs()
     {
         $messageLogs = MessageLog::with('user')->orderBy('created_at', 'desc')->get();
