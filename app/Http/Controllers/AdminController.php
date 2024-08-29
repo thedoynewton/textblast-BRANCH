@@ -29,8 +29,11 @@ class AdminController extends Controller
         $balanceData = $moviderService->getBalance();
         $balance = $balanceData['balance'] ?? 0;
 
+        // Set the threshold for low balance
+        $warningThreshold = 0.065; // Adjust as needed
+
         // Check if the balance is low
-        $lowBalance = $balance < 10; // Adjust the threshold as needed
+        $lowBalance = $balance < $warningThreshold;
 
         // Fetch message statistics
         $totalMessagesSent = MessageLog::count();
@@ -87,8 +90,11 @@ class AdminController extends Controller
         $balanceData = $moviderService->getBalance();
         $balance = $balanceData['balance'] ?? 0;
 
+        // Set the threshold for low balance
+        $warningThreshold = 0.065; // Adjust as needed
+
         // Check if the balance is low
-        $lowBalance = $balance < 10; // Adjust the threshold as needed
+        $lowBalance = $balance < $warningThreshold;
 
         // Log the balance value
         Log::info('Movider Balance:', ['balance' => $balance]);
