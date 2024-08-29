@@ -40,6 +40,34 @@ class MessageController extends Controller
 
     public function reviewMessage(Request $request)
     {
+        // Calculate the number of messages to be sent
+        $broadcastType = $request->input('broadcast_type');
+        $totalRecipients = 0;
+
+        if ($broadcastType === 'students' || $broadcastType === 'all') {
+            $studentQuery = $this->buildRecipientQuery($request, 'students');
+            $totalRecipients += $studentQuery->count();
+        }
+        if ($broadcastType === 'employees' || $broadcastType === 'all') {
+            $employeeQuery = $this->buildRecipientQuery($request, 'employees');
+            $totalRecipients += $employeeQuery->count();
+        }
+
+        // Calculate the total cost
+        $messageCost = 0.0065; // cost per message
+        $totalCost = $totalRecipients * $messageCost;
+
+        // Fetch the current balance
+        $balanceData = $this->moviderService->getBalance();
+        $currentBalance = $balanceData['balance'] ?? 0;
+
+        // Check if the balance is sufficient
+        if ($currentBalance < $totalCost) {
+            return redirect()->route('admin.messages')
+                ->with('error', 'Insufficient balance to send the messages.');
+        }
+
+        // Proceed with the usual review process if balance is sufficient
         $data = $request->all();
 
         $campus = $data['campus'] === 'all' ? 'All Campuses' : Campus::find($data['campus'])->campus_name ?? 'All Campuses';
