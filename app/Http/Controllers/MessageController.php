@@ -599,6 +599,11 @@ class MessageController extends Controller
                 ->where('created_at', '>=', $startDate)
                 ->count();
 
+            // Calculate total cancelled messages
+            $totalCancelled = MessageLog::where('status', 'Cancelled')
+                ->where('created_at', '>=', $startDate)
+                ->count();
+
             // Fetch balance from MoviderService
             $balanceData = $this->moviderService->getBalance();
             $balance = $balanceData['balance'] ?? 0;
@@ -611,6 +616,7 @@ class MessageController extends Controller
                 'total_failed' => $totalFailed,
                 'total_scheduled' => $totalScheduled,
                 'total_immediate' => $totalImmediate,
+                'total_cancelled' => $totalCancelled, // Include total_cancelled in the response
                 'balance' => $balance,
                 'chart_data' => $chartData,
             ]);
