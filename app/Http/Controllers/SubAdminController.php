@@ -31,8 +31,8 @@ class SubAdminController extends Controller
         $offices = Office::all();
         $statuses = Status::all();
         $types = Type::all();
-        $messageTemplates = MessageTemplate::all(); // New line added
-
+        $messageTemplates = MessageTemplate::all(); // Add this line
+    
         return view('subadmin.messages', compact('campuses', 'colleges', 'programs', 'years', 'offices', 'statuses', 'types', 'messageTemplates'));
     }
 
@@ -46,16 +46,16 @@ class SubAdminController extends Controller
     {
         $balanceData = $moviderService->getBalance();
         $balance = $balanceData['balance'] ?? 0;
-
+    
         // Set the threshold for low balance
         $warningThreshold = 0.065; // Adjust as needed
-
+    
         // Check if the balance is low
         $lowBalance = $balance < $warningThreshold;
-
+    
         return view('subadmin.analytics', compact('balance', 'lowBalance'));
     }
-
+    
     protected function sendMoviderMessage($phoneNumber, $message)
     {
         $apiKey = config('services.movider.api_key');

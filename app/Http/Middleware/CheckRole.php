@@ -22,13 +22,14 @@ class CheckRole
         if (!Auth::check()) {
             return redirect()->route('google.login')->with('error', 'Please log in to access this page.');
         }
-
+    
         // Check if the authenticated user's role matches the required role
         if (Auth::user()->role === $role) {
             return $next($request);
         }
-
+    
         // If the user's role does not match, redirect them to the access denied page
         return redirect()->route('access.denied');
     }
+    
 }

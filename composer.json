@@ -6,7 +6,6 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "codeat3/blade-eos-icons": "^1.14",
         "codeat3/blade-teeny-icons": "^1.10",
         "doctrine/dbal": "^4.0",
         "guzzlehttp/guzzle": "^7.9",

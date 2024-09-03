@@ -162,7 +162,6 @@
                 style="color: var(--primary-text); height: 14rem" required>{{ request('message') }}</textarea>
         </div>
 
-
         <div class="mb-6 flex items-center space-x-8">
             <!-- Batch Size Input -->
             <div>
@@ -199,7 +198,7 @@
         </div>
     </form>
 </div>
-
 <!-- This loads the script in resources/js -->
-@vite(['resources/js/messages.js', 'resources/js/messagesWarning.js'])
+@vite(['resources/js/messages.js'])
+@vite(['resources/js/messagesWarning.js'])
 @endsection

@@ -98,7 +98,6 @@ document.addEventListener('DOMContentLoaded', function () {
         // Restore the original state
         ctx.restore();
     });
-    
 
     // Export as Excel (using a library like SheetJS)
     document.getElementById('exportExcel').addEventListener('click', function () {

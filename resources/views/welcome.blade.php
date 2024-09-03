@@ -71,7 +71,6 @@
             </div>
         </div>
 
-
         <!-- Right Side Login Form -->
         <div class="floating-panel w-full max-w-md p-8 text-center bg-white">
             @if (session('error'))
@@ -83,23 +82,40 @@
             <img src="/images/SePhi Favicon.png" alt="USeP Logo" class="w-24 h-24 mx-auto">
             <h1 class="font-bold text-2xl text-center mt-4 text-primary">WELCOME BACK</h1>
             <p class="text-center text-gray-600 mt-2 mb-12">Proceed to login by selecting login options</p>
-            <form>
-                <!-- Google Login Button -->
-                <a href="{{ url('auth/google') }}" class="inline-flex items-center justify-center px-4 py-2 mb-4 bg-primary text-white font-semibold rounded-lg shadow-md w-full">
-                    Continue with Google
-                </a>
 
-                <!-- Divider -->
-                <div class="flex items-center my-4">
-                    <hr class="flex-grow border-gray-300">
-                    <span class="mx-4 text-gray-500">or</span>
-                    <hr class="flex-grow border-gray-300">
+            <!-- Google Login Button -->
+            <a href="{{ url('auth/google') }}" class="inline-flex items-center justify-center px-4 py-2 mb-4 bg-primary text-white font-semibold rounded-lg shadow-md w-full">
+                Continue with Google
+            </a>
+
+            <!-- Divider -->
+            <div class="flex items-center my-4">
+                <hr class="flex-grow border-gray-300">
+                <span class="mx-4 text-gray-500">or</span>
+                <hr class="flex-grow border-gray-300">
+            </div>
+
+            <!-- Email Login Form -->
+            <form action="{{ route('login.email') }}" method="POST">
+                @csrf
+
+                <!-- Display Validation Errors -->
+                @if ($errors->any())
+                <div class="bg-red-100 text-red-700 p-4 rounded mb-4 text-left">
+                    @foreach ($errors->all() as $error)
+                    @if ($error == 'The selected email is invalid.')
+                    <div>This USeP email does not have access to this System. For concerns please contact sdmd@usep.edu.ph.</div>
+                    @else
+                    <div>{{ $error }}</div>
+                    @endif
+                    @endforeach
                 </div>
+                @endif
 
                 <!-- Email Input -->
                 <div class="mb-4">
                     <label for="email" class="block text-gray-700 text-left mb-2">Email</label>
-                    <input type="email" id="email" placeholder="Enter your USeP email" class="border rounded border-gray-500 py-2 px-3 w-full">
+                    <input type="email" id="email" name="email" placeholder="Enter your USeP email" class="border rounded border-gray-500 py-2 px-3 w-full" required>
                 </div>
 
                 <!-- Email Login Button -->
@@ -114,27 +130,6 @@
                     <p class="text-gray-500 mb-2">Having Trouble?</p>
                     <a href="#" class="text-primary">Send us a message</a>
                 </div>
-            </div>
-            @else
-            <div class="text-center">
-                <img src="{{ Auth::user()->avatar }}" alt="user profile" class="w-24 h-24 rounded-full mx-auto mb-4">
-                <h2 class="text-xl font-semibold">{{ Auth::user()->name }}</h2>
-                <p class="text-gray-600">{{ Auth::user()->email }}</p>
-                <a href="{{ url('logout') }}" class="inline-flex items-center px-4 py-2 mt-4 bg-primary text-white font-semibold rounded-lg shadow-md hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-75">
-                    Logout
-                </a>
-                <div class="mt-4">
-                    @if (Auth::user()->role === 'admin')
-                    <a href="{{ route('admin.dashboard') }}" class="inline-flex items-center px-4 py-2 bg-primary text-white font-semibold rounded-lg shadow-md hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-75">
-                        Go to Admin Dashboard
-                    </a>
-                    @elseif (Auth::user()->role === 'subadmin')
-                    <a href="{{ route('subadmin.dashboard') }}" class="inline-flex items-center px-4 py-2 bg-primary text-white font-semibold rounded-lg shadow-md hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-75">
-                        Go to Subadmin Dashboard
-                    </a>
-                    @endif
-                </div>
-                <h3 class="font-medium text-primary mt-6">Hello! You don't have permissions to access the system please contact us at <a href="#">sdmd@usep.edu.ph</a></h3>
             </div>
             @endguest
         </div>
