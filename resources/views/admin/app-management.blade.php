@@ -73,6 +73,7 @@
                             <th class="py-3 px-4 border-b font-semibold text-gray-500 text-left">Middle Name</th>
                             <th class="py-3 px-4 border-b font-semibold text-gray-500 text-left">Contact</th>
                             <th class="py-3 px-4 border-b font-semibold text-gray-500 text-left">Email</th>
+                            <th class="py-3 px-4 border-b font-semibold text-gray-500 text-left">Actions</th> <!-- Add Action Column -->
                         </tr>
                     </thead>
                     <tbody id="contactsTableBody">
@@ -138,8 +139,7 @@
 
                         @if ($messageTemplates->isEmpty())
                         <tr>
-                            <td colspan="3" class="text-center py-4 text-gray-500">No message templates found.
-                            </td>
+                            <td colspan="3" class="text-center py-4 text-gray-500">No message templates found.</td>
                         </tr>
                         @endif
                     </tbody>
@@ -238,7 +238,31 @@
     </div>
 </div>
 
-
+<!-- Modal for Editing Contact -->
+<div id="editContactModal" class="fixed inset-0 z-50 hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" aria-hidden="true"></div>
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">​</span>
+        <div class="inline-block overflow-hidden transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+            <div class="px-4 py-4 bg-white">
+                <h3 class="text-lg font-medium leading-6 text-gray-900" id="modal-title">Edit Contact Number</h3>
+                <div class="mt-2">
+                    <label for="editContactInput" class="block text-sm font-medium text-gray-700">New Contact Number</label>
+                    <input type="text" id="editContactInput" class="block w-full px-4 py-2 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <input type="hidden" id="editContactEmail" value="">
+                </div>
+            </div>
+            <div class="px-4 py-3 bg-gray-50 sm:flex sm:flex-row-reverse">
+                <button type="button" id="saveContactBtn" class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm sm:ml-3 sm:w-auto sm:text-sm">
+                    Save
+                </button>
+                <button type="button" id="cancelContactBtn" class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm sm:mt-0 sm:w-auto sm:text-sm">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @vite([
 'resources/js/app.css',
