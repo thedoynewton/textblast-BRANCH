@@ -1,24 +1,33 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const modal = document.getElementById('messageContentModal');
-    const modalTitle = document.getElementById('modal-title');
-    const modalContent = document.getElementById('modal-message-content');
-    const closeModalButton = document.getElementById('close-modal');
+    // Handle "Read More" link click for both message templates and message logs
+    document.querySelectorAll('[data-modal-target]').forEach(link => {
+        link.addEventListener('click', function (event) {
+            event.preventDefault();
 
-    // Handle "Read More" link click
-    document.querySelectorAll('a[data-modal-target]').forEach(link => {
-        link.addEventListener('click', function (e) {
-            e.preventDefault();
+            // Get modal target and content data
+            const modalId = this.getAttribute('data-modal-target');
             const title = this.getAttribute('data-template-name');
             const content = this.getAttribute('data-content');
-            
-            modalTitle.textContent = title; // Populate the title
-            modalContent.textContent = content; // Populate the content
-            modal.classList.remove('hidden'); // Show the modal
+
+            // Get the modal elements dynamically based on modalId
+            const modal = document.querySelector(modalId);
+            const modalTitle = modal.querySelector('#modal-title');
+            const modalContent = modal.querySelector('#modal-message-content');
+
+            // Populate modal content
+            modalTitle.textContent = title;
+            modalContent.textContent = content;
+
+            // Show the correct modal
+            modal.classList.remove('hidden');
         });
     });
 
-    // Handle "Close" button click
-    closeModalButton.addEventListener('click', function () {
-        modal.classList.add('hidden'); // Hide the modal
+    // Handle "Close" button click for both modals
+    document.querySelectorAll('#close-modal').forEach(button => {
+        button.addEventListener('click', function () {
+            const modal = this.closest('.fixed');  // Find the closest modal element
+            modal.classList.add('hidden');  // Hide the modal
+        });
     });
 });

@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="container mx-auto">
+<div class="container">
     <div class="bg-white p-6 rounded-lg shadow-lg">
 
         <!-- Tabs -->
@@ -69,7 +69,7 @@
             </div>
 
             <!-- Contacts Table -->
-            <div class="overflow-x-auto overflow-y-auto max-h-96 mb-8">
+            <div class="overflow-x-auto max-h-[450px]">
                 <table id="contactsTable" class="min-w-full bg-white border border-gray-300 rounded-lg">
                     <thead class="bg-gray-100">
                         <tr>
@@ -78,7 +78,7 @@
                             <th class="py-3 px-4 border-b font-semibold text-gray-500 text-left">Middle Name</th>
                             <th class="py-3 px-4 border-b font-semibold text-gray-500 text-left">Contact</th>
                             <th class="py-3 px-4 border-b font-semibold text-gray-500 text-left">Email</th>
-                            <th class="py-3 px-4 border-b font-semibold text-gray-500 text-left">Actions</th> <!-- Add Action Column -->
+                            <th class="py-3 px-4 border-b font-semibold text-gray-500 text-left">Actions</th>
                         </tr>
                     </thead>
                     <tbody id="contactsTableBody">
@@ -90,16 +90,8 @@
 
         <!-- Message Templates Tab -->
         <div id="messageTemplates" class="tab-content hidden">
-            <!-- Add Message Template Button -->
-            <div class="mb-4 text-right">
-                <a href="{{ route('message_templates.create') }}"
-                    class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200 ease-in-out">
-                    Add New Template
-                </a>
-            </div>
-
             <!-- Message Templates Table -->
-            <div class="overflow-x-auto overflow-y-auto max-h-96 mb-8">
+            <div class="overflow-x-auto max-h-[532px]">
                 <table id="messageTemplatesTable" class="min-w-full bg-white border border-gray-300 rounded-lg">
                     <thead class="bg-gray-100">
                         <tr>
@@ -116,7 +108,7 @@
                                 {{ \Illuminate\Support\Str::limit($template->content, 70, '...') }}
                                 @if (strlen($template->content) > 70)
                                 <a href="#" class="text-blue-500 hover:underline"
-                                    data-modal-target="#messageContentModal"
+                                    data-modal-target="#messageTemplateModal"
                                     data-template-name="{{ $template->name }}"
                                     data-content="{{ $template->content }}">
                                     Read More
@@ -156,8 +148,16 @@
                         @endif
                     </tbody>
                 </table>
+
+                <!-- Add New Template Button - Always Visible -->
+                <div class="flex justify-center sticky bottom-0 bg-white py-4">
+                    <a href="{{ route('message_templates.create') }}"
+                        class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200 ease-in-out">
+                        Add New Template
+                    </a>
+                </div>
                 <!-- Include the Modal Component -->
-                <x-modal modal-id="messageContentModal" title="Announcement" content="Exciting News!"></x-modal>
+                <x-modal modal-id="messageTemplateModal" title="Message Template" content="Exciting News!"></x-modal>
             </div>
         </div>
 
@@ -191,7 +191,7 @@
             </div>
 
             <!-- Message Logs Table -->
-            <div class="overflow-x-auto overflow-y-auto max-h-96 mb-8">
+            <div class="overflow-x-auto max-h-[450px]">
                 <table id="messageLogsTable" class="min-w-full bg-white border border-gray-300 rounded-lg divide-y divide-gray-200">
                     <thead class="bg-gray-100">
                         <tr>
@@ -215,7 +215,18 @@
                         <tr class="hover:bg-gray-50 transition duration-150 ease-in-out">
                             <td class="py-3 px-4 border-b text-gray-600 whitespace-nowrap">{{ $log->user->name }}</td>
                             <td class="py-3 px-4 border-b text-gray-600 whitespace-nowrap">{{ $log->recipient_type }}</td>
-                            <td class="py-3 px-4 border-b text-gray-600">{{ $log->content }}</td>
+                            <td class="py-3 px-4 border-b text-gray-600">
+                                {{ \Illuminate\Support\Str::limit($log->content, 20, '...') }}
+                                @if (strlen($log->content) > 70)
+                                <a href="#" class="text-blue-500 hover:underline"
+                                    data-modal-target="#messageLogsModal"
+                                    data-template-name="Details"
+                                    data-content="{{ $log->content }}">
+                                    <br>
+                                    Read More
+                                </a>
+                                @endif
+                            </td>
                             <td class="py-3 px-4 border-b text-gray-600 whitespace-nowrap">{{ $log->schedule }}</td>
                             <td class="py-3 px-4 border-b text-gray-600 whitespace-nowrap">{{ $log->created_at->format('F j, Y g:i A') }}</td>
                             <td class="py-3 px-4 border-b text-gray-600 whitespace-nowrap">{{ $log->scheduled_at ? $log->scheduled_at->format('F j, Y g:i A') : 'N/A' }}</td>
@@ -249,6 +260,8 @@
                         @endif
                     </tbody>
                 </table>
+                <!-- Include the Modal Component for Logs -->
+                <x-modal modal-id="messageLogsModal" title="Message Log" content="Exciting News!"></x-modal>
             </div>
         </div>
     </div>
