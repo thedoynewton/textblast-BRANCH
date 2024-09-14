@@ -89,12 +89,13 @@
             <!-- Student-specific Filters -->
             <div class="flex space-x-4 mb-4" id="student_filters" style="display: none;">
                 <div class="w-1/3">
-                    <label for="college" class="block text-sm font-medium">College</label>
+                    <label for="college" class="block text-sm font-medium">Academic Unit</label>
                     <select name="college" id="college" required
                         class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm p-2"
                         onchange="updateProgramDropdown()">
-                        <option value="" disabled selected>Select College</option>
-                        <option value="all">All Colleges</option>
+                        <option value="" disabled selected>Select Academic Unit</option>
+                        <option value="">Select Academic Unit</option>
+                        <option value="all">All Academic Unit</option>
                     </select>
                 </div>
 
@@ -165,7 +166,7 @@
         <div class="mb-6 flex items-center space-x-8">
             <!-- Batch Size Input -->
             <div>
-                <label for="batch_size" class="block text-sm font-medium">Send Message by</label>
+                <label for="batch_size" class="block text-sm font-medium">Batch Size</label>
                 <input type="number" name="batch_size" id="batch_size" class="w-full border rounded-md shadow-sm p-1" value="1" min="1">
             </div>
 
@@ -199,6 +200,5 @@
     </form>
 </div>
 <!-- This loads the script in resources/js -->
-@vite(['resources/js/messages.js'])
-@vite(['resources/js/messagesWarning.js'])
+@vite(['resources/js/messages.js', 'resources/js/messagesWarning.js'])
 @endsection
