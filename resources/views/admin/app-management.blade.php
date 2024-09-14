@@ -119,17 +119,24 @@
                                 @endif
                             </td>
                             <td class="py-3 px-4 border-b text-gray-600">
-                                <div class="flex space-x-2">
-                                    <a href="{{ route('message_templates.edit', $template->id) }}"
-                                        class="text-blue-500 hover:underline">
-                                        <x-tni-edit-circle class="w-9 h-9" />
-                                    </a>
-                                    <form action="{{ route('message_templates.destroy', $template->id) }}"
-                                        method="POST" class="inline-block">
+                                <div class="flex items-center space-x-2">
+                                    <!-- Edit Button with Icon -->
+                                    <form action="{{ route('message_templates.edit', $template->id) }}" method="GET" class="inline">
+                                        <button type="submit" class="focus:outline-none">
+                                            <div class="rounded-full bg-blue-500 p-2 hover:bg-blue-600 flex items-center justify-center" title="Edit">
+                                                <img src="{{ asset('images/edit.png') }}" alt="Edit" class="h-5 w-5" style="filter: brightness(0) invert(1);">
+                                            </div>
+                                        </button>
+                                    </form>
+
+                                    <!-- Delete Button with Icon -->
+                                    <form action="{{ route('message_templates.destroy', $template->id) }}" method="POST" class="inline">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="focus:outline-none">
-                                            <x-mdi-delete-circle class="w-10 h-10 text-red-500" />
+                                            <div class="rounded-full bg-red-500 p-2 hover:bg-red-600 flex items-center justify-center" title="Delete">
+                                                <img src="{{ asset('images/delete.png') }}" alt="Delete" class="h-5 w-5" style="filter: brightness(0) invert(1);">
+                                            </div>
                                         </button>
                                     </form>
                                 </div>
