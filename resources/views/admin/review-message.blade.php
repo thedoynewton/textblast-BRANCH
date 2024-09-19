@@ -91,7 +91,10 @@
             <button class="bg-yellow-500 text-white px-4 py-2 rounded-lg mr-2">
                 <a href="{{ route('admin.messages', $data) }}">Edit Message</a>
             </button>
-            <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-lg">Confirm and Send</button>
+            <button type="submit" class="bg-[#8b0000] text-white px-4 py-2 rounded-lg">
+                Confirm and Send
+            </button>
+
         </form>
     </div>
 

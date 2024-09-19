@@ -22,13 +22,15 @@
     <div class="bg-white w-73 flex flex-col justify-between fixed h-full z-50">
         <!-- Menu -->
         <div>
-            <div class="flex justify-center my-5">
-                <img src="/images/SePhi Favicon.png" class="w-14 h-auto" />
+            <div class="flex flex-col items-center mt-6">
+                <img src="/images/SePhi Favicon.png" class="w-16 h-auto" />
+                <h1 style="font-size: 20px;" class="mt-2 text-2xl font-bold text-red-700">SePhi</h1>
+                <p style="font-size: 8px;" class="text-gray-600">Text Broadcast</p>
             </div>
 
             <hr class="my-4 border-t-2 border-gray-200 w-full">
 
-            <div class="flex items-center justify-center w-full my-10">
+            <div class="flex items-center justify-center w-full my-6">
                 <img src="{{ Auth::user()->avatar }}" alt="user profile" class="w-10 h-auto rounded-full">
                 <p class="text-black pl-2 text-sm font-medium">{{ strtok(Auth::user()->email, '@') }}</p>
                 <div class="relative">

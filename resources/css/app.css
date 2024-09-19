@@ -5,14 +5,15 @@
 @tailwind utilities; */
 
 :root {
-    --primary-bg: #c3cbdc;
     --primary-text: #000000;
-    --secondary-bg: #ffffff;
     --secondary-text: #757575;
+
+    --primary-bg: #c3cbdc;
+    --secondary-bg: #ffffff;
 
     /* For the Navigation Link Button State */
     --button-text: #291e13;
-    --button-hover-text: #6a6a6a;
+    --button-hover-text: #eab308;
     --button-selected-text: #000000;
     --button-selected-bg: #e5e7eb;
 }
@@ -65,22 +66,25 @@ body {
 
 /* BUTTON STATES */
 .button-default {
-    color: var(--button-text);
+    color: var(--button-text); /* Default text color */
 }
 
 .button-hover:hover {
-    color: var(--button-hover-text);
+    color: var(--button-hover-text); /* Hover state */
+    background-color: var(--button-hover-bg); /* Optional hover background color */
 }
 
 .button-selected {
-    color: var(--button-selected-text);
+    color: #8d0101; /* Dark red text color */
+    border-left: 4px solid #8b0000; /* Border on the left side to emphasize selection */
+    font-weight: bold; /* Bold text for selected state */
     background-color: var(--button-selected-bg);
 }
 
 /* SYSTEM THEMES */
 [data-theme="dark"] {
-    --primary-bg: #1c4e80;
-    --primary-text: #000000;
+    --primary-bg: #800000;
+    --primary-text: #080707;
     --secondary-bg: #7c909a;
     --secondary-text: #000000;
 }

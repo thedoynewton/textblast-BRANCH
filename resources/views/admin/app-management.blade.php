@@ -27,17 +27,15 @@
 
         <!-- Contacts Tab -->
         <div id="contacts" class="tab-content">
-            <!-- Filters Selection -->
-            <div class="grid grid-cols-12 gap-4 mb-4">
-                <!-- Search Contacts (Spans 5 out of 12 columns) -->
-                <div class="col-span-5">
+            <!-- Filters Selection (Updated to be inline) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-4">
+                <div>
                     <label for="contactsSearch" class="block text-sm font-medium text-gray-700">Search Contacts</label>
                     <input type="text" id="contactsSearch" placeholder="Search for contacts..."
                         class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm p-2">
                 </div>
 
-                <!-- Select Campus (Spans 3 out of 12 columns) -->
-                <div class="col-span-3">
+                <div>
                     <label for="campus" class="block text-sm font-medium text-gray-700">Select Campus</label>
                     <select name="campus" id="campus"
                         class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm p-2">
@@ -48,8 +46,7 @@
                     </select>
                 </div>
 
-                <!-- Filter By (Spans 3 out of 12 columns) -->
-                <div class="col-span-3 mr-3">
+                <div>
                     <label for="filter" class="block text-sm font-medium text-gray-700">Filter By</label>
                     <select name="filter" id="filter"
                         class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm p-2">
@@ -57,14 +54,6 @@
                         <option value="students">Students</option>
                         <option value="employees">Employees</option>
                     </select>
-                </div>
-
-                <!-- Import Button (Spans 1 out of 12 columns, Aligned Right with Padding Adjusted) -->
-                <div class="col-span-1 flex justify-end items-center">
-                    <button type="button"
-                        class="bg-green-500 py-2 px-4 mt-5 text-white font-bold rounded-lg shadow-md hover:bg-green-600 hover:shadow-lg hover:text-gray-100">
-                        Import
-                    </button>
                 </div>
             </div>
 
@@ -181,11 +170,11 @@
                 <!-- Message Type Filter -->
                 <div>
                     <label for="messageType" class="block text-sm font-medium text-gray-700">Filter Message Type</label>
-                    <select id="messageType" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm p-2">
-                        <option value="all" selected>All Message Types</option>
-                        <option value="immediate">Immediate</option>
-                        <option value="scheduled">Scheduled</option>
-                        <option value="cancelled">Cancelled</option> <!-- New Option Added -->
+                    <select id="messageType">
+                        <option value="all">All Statuses</option>
+                        <option value="pending">Pending for Scheduled Messages</option>
+                        <option value="cancelled">Cancelled for Cancelled Messages</option>
+                        <option value="sent">Sent for Successful Messages</option>
                     </select>
                 </div>
             </div>
