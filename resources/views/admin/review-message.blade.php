@@ -1,7 +1,5 @@
 @extends('layouts.admin')
 
-@section('title', 'Review Message')
-
 @section('content')
 
 <div class="flex items-start justify-between bg-white p-6 rounded-lg shadow-md">
@@ -15,6 +13,7 @@
                     @if ($data['broadcast_type'] === 'students' || $data['broadcast_type'] === 'all')
                     {{ trim($filterNames['college']) }},
                     {{ trim($filterNames['program']) }},
+                    {{ trim($filterNames['major']) }},
                     {{ trim($filterNames['year']) }},
                     @endif
                     @if ($data['broadcast_type'] === 'employees' || $data['broadcast_type'] === 'all')
@@ -47,6 +46,11 @@
             </div>
         </div>
 
+        <!-- Edit Message Button -->
+        <button class="bg-yellow-500 text-white px-4 py-2 rounded-lg mr-2">
+            <a href="{{ route('admin.messages', $data) }}">Edit Message</a>
+        </button>
+        
         <!-- Form to confirm and send the message -->
         <form action="{{ route('admin.broadcastToRecipients') }}" method="POST" style="display: inline;">
             @csrf
@@ -69,6 +73,10 @@
             <input type="hidden" name="program" value="{{ $data['program'] }}">
             @endif
 
+            @if (isset($data['major'])) <!-- Added Major field -->
+            <input type="hidden" name="major" value="{{ $data['major'] }}">
+            @endif
+
             @if (isset($data['year']))
             <input type="hidden" name="year" value="{{ $data['year'] }}">
             @endif
@@ -87,14 +95,9 @@
             <input type="hidden" name="total_recipients" value="{{ $totalRecipients }}">
             @endif
 
-            <!-- Edit Message Button -->
-            <button class="bg-yellow-500 text-white px-4 py-2 rounded-lg mr-2">
-                <a href="{{ route('admin.messages', $data) }}">Edit Message</a>
-            </button>
             <button type="submit" class="bg-[#8b0000] text-white px-4 py-2 rounded-lg">
                 Confirm and Send
             </button>
-
         </form>
     </div>
 

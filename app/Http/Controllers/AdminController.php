@@ -23,10 +23,48 @@ use Illuminate\Support\Facades\Http;
 
 class AdminController extends Controller
 {
-    public function dashboard()
+    public function dashboard(MoviderService $moviderService)
     {
-        return view('admin.dashboard');
+        // Get balance using Movider Service
+        $balanceData = $moviderService->getBalance();
+        $balance = $balanceData['ba lance'] ?? 0;
+
+        // Query MessageLog table only once and aggregate counts
+        $messageStats = MessageLog::selectRaw("
+            COUNT(CASE WHEN status = 'Sent' THEN 1 END) AS total_sent,
+            COUNT(CASE WHEN schedule = 'scheduled' AND status = 'Sent' THEN 1 END) AS scheduled_sent,
+            COUNT(CASE WHEN failed_count > 0 THEN 1 END) AS total_failed,
+            COUNT(CASE WHEN schedule = 'immediate' AND status = 'Sent' THEN 1 END) AS total_immediate,
+            COUNT(CASE WHEN status = 'Cancelled' THEN 1 END) AS total_cancelled,
+            COUNT(CASE WHEN status = 'Pending' THEN 1 END) AS total_pending,
+            COUNT(CASE WHEN status = 'Scheduled' THEN 1 END) AS total_scheduled
+        ")->first();
+
+        // Set default values if stats are null
+        $totalSent = $messageStats->total_sent ?? 0;
+        $scheduledSent = $messageStats->scheduled_sent ?? 0;
+        $totalFailed = $messageStats->total_failed ?? 0;
+        $totalImmediate = $messageStats->total_immediate ?? 0;
+        $totalCancelled = $messageStats->total_cancelled ?? 0;
+        $totalPending = $messageStats->total_pending ?? 0;
+        $totalScheduled = $messageStats->total_scheduled ?? 0;
+
+        // Fetch all message logs, including the associated user and campus data
+        $messageLogs = MessageLog::with(['user', 'campus'])->orderBy('created_at', 'desc')->get();
+
+        return view('admin.dashboard', compact(
+            'balance',
+            'totalSent',
+            'scheduledSent',
+            'totalFailed',
+            'totalImmediate',
+            'totalCancelled',
+            'totalPending',
+            'totalScheduled',
+            'messageLogs' // Pass the message logs to the view
+        ));
     }
+
 
     public function messages()
     {
@@ -37,10 +75,12 @@ class AdminController extends Controller
         $offices = Office::all();
         $statuses = Status::all();
         $types = Type::all();
-        $messageTemplates = MessageTemplate::all(); // Add this line to fetch all message templates
+        $majors = Major::all(); // Fetch all majors
+        $messageTemplates = MessageTemplate::all();
 
-        return view('admin.messages', compact('campuses', 'colleges', 'programs', 'years', 'offices', 'statuses', 'types', 'messageTemplates'));
+        return view('admin.messages', compact('campuses', 'colleges', 'programs', 'years', 'offices', 'statuses', 'types', 'majors', 'messageTemplates'));
     }
+
 
     public function broadcastMessages(Request $request)
     {
@@ -179,22 +219,22 @@ class AdminController extends Controller
         $request->validate([
             'name' => 'required|string|max:50',
             'email' => [
-                'required', 
-                'string', 
-                'email', 
-                'max:50', 
+                'required',
+                'string',
+                'email',
+                'max:50',
                 'regex:/^[a-zA-Z0-9._%+-]+@usep\.edu\.ph$/', // Ensure it's a valid @usep.edu.ph email
                 'unique:users,email' // Ensure email doesn't already exist in the users table
             ],
         ]);
-    
+
         // Check if the email exists in the Employee table
         $employee = Employee::where('emp_email', $request->email)->first();
-    
+
         if (!$employee) {
             return redirect()->back()->withErrors(['email' => 'The email does not exist in the Employee records.']);
         }
-    
+
         // Create the user if the email exists in Employee table
         User::create([
             'name' => $request->name,
@@ -202,7 +242,7 @@ class AdminController extends Controller
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-    
+
         return redirect()->route('admin.user-management')->with('success', 'User added successfully.');
     }
 

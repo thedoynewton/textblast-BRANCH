@@ -13,7 +13,7 @@
     <link rel="icon" href="/images/SePhi Favicon.png" type="image/png" sizes="128x128">
 
     <!-- Link to Vite CSS and JS -->
-    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/theme.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
 </head>
 
@@ -122,15 +122,17 @@
     </div>
 
     <!-- Main Content -->
-    <div class="bg-gray-200 flex-1 ml-73 relative overflow-auto z-0">
-        <div class="absolute w-full h-36 shadow-md bg-primary z-0"></div>
-        <div class="relative flex-1 p-8">
-            <!-- Page Content -->
+    <div class="bg-gray-200 relative flex-1 ml-73 overflow-auto z-0">
+        <!-- Page Content -->
+        <div class="relative z-10 p-8">
             <h1 class="text-2xl font-semibold mb-4 text-white">@yield('title')</h1>
             <div class="">
                 @yield('content')
             </div>
         </div>
+
+        <!-- Wave Effect -->
+        <img id="waveEffect" src="/images/wave.png" alt="Wave Effect" class="absolute bottom-0 left-0 w-full h-auto z-0">
     </div>
 </body>
 

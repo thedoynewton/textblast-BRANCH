@@ -8,16 +8,13 @@ document.addEventListener('DOMContentLoaded', function () {
             const modalId = this.getAttribute('data-modal-target');
             const title = this.getAttribute('data-template-name');
             const content = this.getAttribute('data-content');
-
             // Get the modal elements dynamically based on modalId
             const modal = document.querySelector(modalId);
             const modalTitle = modal.querySelector('#modal-title');
             const modalContent = modal.querySelector('#modal-message-content');
-
             // Populate modal content
             modalTitle.textContent = title;
             modalContent.textContent = content;
-
             // Show the correct modal
             modal.classList.remove('hidden');
         });

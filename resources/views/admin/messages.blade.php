@@ -1,7 +1,5 @@
 @extends('layouts.admin')
 
-@section('title', 'Messages')
-
 @section('content')
 <!-- Display Success or Error Messages -->
 @if (session('success'))
@@ -14,7 +12,8 @@
         <div class="relative pt-1">
             <div class="flex mb-2 items-center justify-between">
                 <div>
-                    <span id="progress-label" class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-blue-600 bg-blue-200">
+                    <span id="progress-label"
+                        class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-blue-600 bg-blue-200">
                         0% Sent
                     </span>
                 </div>
@@ -25,7 +24,9 @@
                 </div>
             </div>
             <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-blue-200">
-                <div id="progress-bar" style="width:0%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500"></div>
+                <div id="progress-bar" style="width:0%"
+                    class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500">
+                </div>
             </div>
         </div>
     </div>
@@ -54,7 +55,8 @@
                 <button type="button" class="tab-button px-4 py-2 text-sm font-medium focus:outline-none"
                     data-value="employees">EMPLOYEES</button>
             </div>
-            <input type="hidden" name="broadcast_type" id="broadcast_type" value="{{ request('broadcast_type', 'all') }}">
+            <input type="hidden" name="broadcast_type" id="broadcast_type"
+                value="{{ request('broadcast_type', 'all') }}">
         </div>
 
         <!-- Filters Container -->
@@ -64,7 +66,8 @@
                 <!-- Campus Selection (Always Visible) -->
                 <div class="flex-grow" id="campus_filter">
                     <label for="campus" class="block text-sm font-medium">Campus</label>
-                    <select name="campus" id="campus" class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm p-2" required>
+                    <select name="campus" id="campus"
+                        class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm p-2" required>
                         <option value="" disabled selected>Select Campus</option>
                         <option value="all">All Campuses</option>
                         @foreach ($campuses as $campus)
@@ -102,13 +105,24 @@
                 <div class="w-1/3">
                     <label for="program" class="block text-sm font-medium">Academic Program</label>
                     <select name="program" id="program" required
-                        class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm p-2">
+                        class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm p-2"
+                        onchange="updateMajorDropdown()">
                         <option value="" disabled selected>Select Program</option>
                         <option value="all">All Programs</option>
                     </select>
                 </div>
 
+                <!-- New: Major Selection Dropdown -->
                 <div class="w-1/3">
+                    <label for="major" class="block text-sm font-medium">Major</label>
+                    <select name="major" id="major" required
+                        class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm p-2">
+                        <option value="" disabled selected>Select Major</option>
+                        <option value="all">All Majors</option>
+                    </select>
+                </div>
+
+                <div class="w-1/4">
                     <label for="year" class="block text-sm font-medium">Year</label>
                     <select name="year" id="year" required
                         class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm p-2">
@@ -167,13 +181,15 @@
             <!-- Batch Size Input -->
             <div>
                 <label for="batch_size" class="block text-sm font-medium">Batch Size</label>
-                <input type="number" name="batch_size" id="batch_size" class="w-full border rounded-md shadow-sm p-1" value="1" min="1">
+                <input type="number" name="batch_size" id="batch_size"
+                    class="w-full border rounded-md shadow-sm p-1" value="1" min="1">
             </div>
 
             <!-- Display Total Recipients -->
             <div>
                 <label class="block text-sm font-medium">Total Recipients</label>
-                <input type="text" id="total_recipients" class="w-full p-1.5 border rounded-md shadow-sm text-center text-sm font-medium" readonly>
+                <input type="text" id="total_recipients"
+                    class="w-full p-1.5 border rounded-md shadow-sm text-center text-sm font-medium" readonly>
             </div>
 
             <!-- Send Message Options -->
@@ -182,6 +198,7 @@
                 <div class="p-1 flex items-center space-x-2">
                     <input type="radio" id="immediate" name="schedule" value="immediate" checked>
                     <label for="immediate">Now</label>
+
                     <input type="radio" id="scheduled" name="schedule" value="scheduled">
                     <label for="scheduled">Send Later</label>
                 </div>
@@ -190,15 +207,16 @@
             <!-- Date and Time Picker for Scheduling -->
             <div id="schedule-options" style="display: none;">
                 <label for="scheduled_date" class="block text-sm font-medium">Select Date and Time:</label>
-                <input type="datetime-local" id="scheduled_date" name="scheduled_date" class="w-full h-8 border border-gray-300 rounded-md shadow-sm">
+                <input type="datetime-local" id="scheduled_date" name="scheduled_date"
+                    class="w-full h-8 border border-gray-300 rounded-md shadow-sm">
             </div>
         </div>
 
         <div class="flex justify-end">
-            <x-button type="submit" color="yellow">Review Message</x-button>
+            <x-button type="submit" color="red">Review Message</x-button>
         </div>
     </form>
 </div>
 <!-- This loads the script in resources/js -->
-@vite(['resources/js/messages.js', 'resources/js/messagesWarning.js'])
+@vite(['resources/js/messages.js', 'resources/js/app.js'])
 @endsection

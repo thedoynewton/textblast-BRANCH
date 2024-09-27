@@ -13,44 +13,8 @@
     <link rel="icon" href="/images/SePhi Favicon.png" type="image/png" sizes="64x64">
     <link rel="icon" href="/images/SePhi Favicon.png" type="image/png" sizes="128x128">
 
-    <style>
-        :root {
-            --primary-color: #800000;
-        }
-
-        .bg-primary {
-            background-color: var(--primary-color);
-        }
-
-        .text-primary {
-            color: var(--primary-color);
-        }
-
-        .border-primary {
-            border-color: var(--primary-color);
-        }
-
-        .floating-panel {
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            transform: translateY(-10px);
-            z-index: 10;
-            position: relative;
-            margin-left: auto;
-            margin-right: 5%;
-        }
-    </style>
-
-    @if (Auth::check())
-    <script type="module">
-        window.userRole = "{{ Auth::user()->role }}";
-        window.adminDashboardUrl = "{{ route('admin.dashboard') }}";
-        window.subadminDashboardUrl = "{{ route('subadmin.dashboard') }}";
-
-        import '/resources/js/redirect.js';
-    </script>
-    @endif
-
+    <!-- Vite Link -->
+    @vite(['resources/css/app.css'])
 </head>
 
 <body class="bg-gray-100 h-screen relative">
@@ -91,19 +55,6 @@
             <!-- Email Login Form -->
             <form action="{{ route('login.email') }}" method="POST">
                 @csrf
-
-                <!-- Display Validation Errors -->
-                @if ($errors->any())
-                <div class="bg-red-100 text-red-700 p-4 rounded mb-4 text-left">
-                    @foreach ($errors->all() as $error)
-                    @if ($error == 'The selected email is invalid.')
-                    <div>This USeP email does not have access to this System. For concerns please contact sdmd@usep.edu.ph.</div>
-                    @else
-                    <div>{{ $error }}</div>
-                    @endif
-                    @endforeach
-                </div>
-                @endif
 
                 <!-- Email Input -->
                 <div class="mb-4">

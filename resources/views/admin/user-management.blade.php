@@ -1,7 +1,5 @@
 @extends('layouts.admin')
 
-@section('title', 'User Management')
-
 @section('content')
 
 <div class="bg-white p-6 rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl">
@@ -17,7 +15,10 @@
     </div>
     @endif
 
-    <h2 class="text-2xl font-bold mb-6 text-center sm:text-left">Add New User</h2>
+    <h2 class="text-2xl font-bold mb-6 text-center sm:text-left" style="color: var(--primary-color);">
+        Add New User
+    </h2>
+
 
     @if ($errors->any())
     <div x-data="{ open: true }" class="relative z-50">
@@ -39,7 +40,8 @@
                 </ul>
                 <div class="mt-6 text-center">
                     <button @click="open = false"
-                        class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-transform duration-300 hover:scale-105">Close</button>
+                        class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-transform duration-300 hover:scale-105">Close
+                    </button>
                 </div>
             </div>
         </div>
@@ -68,12 +70,14 @@
             </div>
         </div>
         <div class="flex flex-col sm:flex-row justify-end mt-8 space-y-4 sm:space-y-0 sm:space-x-4">
-            <x-button type="reset" color="red">Clear Fields</x-button>
-            <x-button type="submit" color="green">Add User</x-button>
+            <x-button type="reset" color="gray">Clear Fields</x-button>
+            <x-button type="submit" color="red">Add User</x-button>
         </div>
     </form>
 
-    <h1 class="text-2xl font-bold mb-6 text-center sm:text-left">List of Users</h1>
+    <h2 class="text-2xl font-bold mb-6 text-center sm:text-left" style="color: var(--primary-color);">
+        List of Users
+    </h2>
     <form action="{{ route('admin.user-management') }}" method="GET" class="mb-6">
         <div class="flex items-center w-full border border-transparent rounded-lg">
             <input type="text" name="search" id="search" placeholder="Search by name"
@@ -103,7 +107,7 @@
                         <td class="py-2 px-4 text-xs text-gray-700 text-center">
                             <div x-data="{ open: false }" class="relative inline-flex items-center">
                                 <button @click="open = !open" class="inline-flex items-center justify-center p-1 transition-transform duration-300 hover:scale-105">
-                                    <div class="rounded-full bg-blue-500 p-2 hover:bg-blue-600" title="Change Role">
+                                    <div class="rounded-full bg-[#9d1e18] p-2 hover:bg-yellow-500" title="Change Role">
                                         <img src="/svg/switch user.svg" alt="Change Role" class="h-5 w-5" style="filter: brightness(0) invert(1);">
                                     </div>
                                 </button>
@@ -133,7 +137,7 @@
                                     @csrf
                                     @method('PATCH')
                                     <button type="submit" class="inline-flex items-center justify-center p-1 transition-transform duration-300 hover:scale-105">
-                                        <div class="rounded-full bg-red-500 p-2 hover:bg-red-600" title="Remove Access">
+                                        <div class="rounded-full bg-[#4b5563] p-2 hover:bg-[#6b7280]" title="Remove Access">
                                             <img src="/svg/remove access.svg" alt="Remove Access" class="h-5 w-5" style="filter: brightness(0) invert(1);">
                                         </div>
                                     </button>

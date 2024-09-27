@@ -62,14 +62,14 @@ document.addEventListener('DOMContentLoaded', function () {
                         '<tr><td colspan="5" class="text-center py-4">No contacts found.</td></tr>';
                 } else {
                     data.forEach(contact => {
-                        const row = `<tr class="hover:bg-gray-50 transition duration-150 ease-in-out">
-                                        <td class="py-3 px-4 border-b text-gray-600">${contact.stud_fname || contact.emp_fname}</td>
-                                        <td class="py-3 px-4 border-b text-gray-600">${contact.stud_lname || contact.emp_lname}</td>
-                                        <td class="py-3 px-4 border-b text-gray-600">${contact.stud_mname || contact.emp_mname || ''}</td>
-                                        <td class="py-3 px-4 border-b text-gray-600">${contact.stud_contact || contact.emp_contact}</td>
-                                        <td class="py-3 px-4 border-b text-gray-600">${contact.stud_email || contact.emp_email}</td>
-                                        <td class="py-3 px-4 border-b text-gray-600">
-                                            <button class="edit-contact text-blue-500 hover:underline" data-email="${contact.stud_email || contact.emp_email}" data-contact="${contact.stud_contact || contact.emp_contact}">
+                        const row = `<hover:bg-gray-100 transition duration-150 ease-in-out text-sm text-gray-700">
+                                        <td class="py-3 px-4">${contact.stud_fname || contact.emp_fname}</td>
+                                        <td class="py-3 px-4">${contact.stud_lname || contact.emp_lname}</td>
+                                        <td class="py-3 px-4">${contact.stud_mname || contact.emp_mname || ''}</td>
+                                        <td class="py-3 px-4">${contact.stud_contact || contact.emp_contact}</td>
+                                        <td class="py-3 px-4">${contact.stud_email || contact.emp_email}</td>
+                                        <td class="py-3 px-4">
+                                            <button class="edit-contact text-[#9d1e18] hover:text-yellow-500" data-email="${contact.stud_email || contact.emp_email}" data-contact="${contact.stud_contact || contact.emp_contact}">
                                                 Edit
                                             </button>
                                         </td>
@@ -139,19 +139,19 @@ document.addEventListener('DOMContentLoaded', function () {
                 contact_number: newContactNumber,
             }),
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                // Close the modal and refresh the contact list
-                editContactModal.classList.add('hidden');
-                fetchContacts();
-            } else {
-                alert('Failed to update contact');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Close the modal and refresh the contact list
+                    editContactModal.classList.add('hidden');
+                    fetchContacts();
+                } else {
+                    alert('Failed to update contact');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     });
 
     // Handle cancel button
