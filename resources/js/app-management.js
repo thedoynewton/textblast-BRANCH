@@ -16,17 +16,17 @@ document.addEventListener("DOMContentLoaded", function () {
             // Remove the active state from all buttons
             buttons.forEach((btn) =>
                 btn.classList.remove(
-                    "text-indigo-500",
+                    "text-red-900",
                     "border-b-2",
-                    "border-indigo-500"
+                    "border-red-900"
                 )
             );
 
             // Add the active state to the clicked button
             this.classList.add(
-                "text-indigo-500",
+                "text-red-900",
                 "border-b-2",
-                "border-indigo-500"
+                "border-red-900"
             );
 
             // Update the hidden input value
@@ -75,27 +75,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 } else {
                     data.forEach((contact) => {
                         const row = `<hover:bg-gray-100 transition duration-150 ease-in-out text-sm text-gray-700">
-                        <td class="py-3 px-4">${
-                            contact.stud_fname || contact.emp_fname
-                        }</td>
-                        <td class="py-3 px-4">${
-                            contact.stud_lname || contact.emp_lname
-                        }</td>
-                        <td class="py-3 px-4">${
-                            contact.stud_mname || contact.emp_mname || ""
-                        }</td>
-                        <td class="py-3 px-4">${
-                            contact.stud_contact || contact.emp_contact
-                        }</td>
-                        <td class="py-3 px-4">${
-                            contact.stud_email || contact.emp_email
-                        }</td>
-                        <td class="py-3 px-4">
-                            <button class="edit-contact text-[#9d1e18] hover:text-yellow-500" data-email="${
-                                contact.stud_email || contact.emp_email
-                            }" data-contact="${
-                            contact.stud_contact || contact.emp_contact
-                        }">
+                                        <td class="py-3 px-4">${contact.stud_fname || contact.emp_fname}</td>
+                                        <td class="py-3 px-4">${contact.stud_lname || contact.emp_lname}</td>
+                                        <td class="py-3 px-4">${contact.stud_mname || contact.emp_mname || ''}</td>
+                                        <td class="py-3 px-4">${contact.stud_contact || contact.emp_contact}</td>
+                                        <td class="py-3 px-4">${contact.stud_email || contact.emp_email}</td>
+                                        <td class="py-3 px-4">
+                                            <button class="edit-contact text-[#9d1e18] hover:text-yellow-500" data-email="${contact.stud_email || contact.emp_email}" data-contact="${contact.stud_contact || contact.emp_contact}">
                                                 Edit
                                             </button>
                                         </td>
