@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FilterController;
 use App\Http\Controllers\MessageController;
@@ -30,6 +31,11 @@ Route::middleware(['auth', CheckRole::class . ':admin'])->group(function () {
     // Dashboard
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
+    // Route to get recipient details
+    Route::get('/admin/recipients/immediate', [AdminController::class, 'getImmediateRecipients']);
+    Route::get('/admin/recipients/failed', [AdminController::class, 'getFailedRecipients']);
+    Route::get('/admin/recipients/scheduled', [AdminController::class, 'getScheduledMessageRecipients']);
+
     // Messages
     Route::get('/admin/messages', [MessageController::class, 'showMessagesForm'])->name('admin.messages');
     Route::post('/admin/broadcast', [MessageController::class, 'broadcastToRecipients'])->name('admin.broadcastToRecipients');
@@ -50,6 +56,8 @@ Route::middleware(['auth', CheckRole::class . ':admin'])->group(function () {
 
     // Analytics
     Route::get('/admin/analytics', [AdminController::class, 'analytics'])->name('admin.analytics');
+    Route::get('/api/analytics/messages', [AnalyticsController::class, 'getBroadcastedMessagesData']);
+
 
     // User Management
     Route::get('/admin/user-management', [AdminController::class, 'userManagement'])->name('admin.user-management');
@@ -59,7 +67,7 @@ Route::middleware(['auth', CheckRole::class . ':admin'])->group(function () {
 
     // App Management
     Route::get('/admin/app-management', [AdminController::class, 'appManagement'])->name('admin.app-management');
-    
+
     // Update Contact Number
     Route::post('/admin/update-contact-number', [AdminController::class, 'updateContactNumber'])->name('admin.update-contact-number');
 });
@@ -68,6 +76,11 @@ Route::middleware(['auth', CheckRole::class . ':admin'])->group(function () {
 Route::middleware(['auth', CheckRole::class . ':subadmin'])->group(function () {
     // Dashboard
     Route::get('/subadmin/dashboard', [SubAdminController::class, 'dashboard'])->name('subadmin.dashboard');
+
+    // Route to get recipient details
+    Route::get('/subadmin/recipients/immediate', [SubAdminController::class, 'getImmediateRecipients']);
+    Route::get('/subadmin/recipients/failed', [SubAdminController::class, 'getFailedRecipients']);
+    Route::get('/subadmin/recipients/scheduled', [SubAdminController::class, 'getScheduledMessageRecipients']);
 
     // Messages
     Route::get('/subadmin/messages', [MessageController::class, 'showMessagesForm'])->name('subadmin.messages');

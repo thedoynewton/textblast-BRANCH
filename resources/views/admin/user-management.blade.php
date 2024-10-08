@@ -19,7 +19,6 @@
         Add New User
     </h2>
 
-
     @if ($errors->any())
     <div x-data="{ open: true }" class="relative z-50">
         <div x-show="open"
@@ -78,6 +77,7 @@
     <h2 class="text-2xl font-bold mb-6 text-center sm:text-left" style="color: var(--primary-color);">
         List of Users
     </h2>
+    
     <form action="{{ route('admin.user-management') }}" method="GET" class="mb-6">
         <div class="flex items-center w-full border border-transparent rounded-lg">
             <input type="text" name="search" id="search" placeholder="Search by name"
@@ -89,26 +89,37 @@
     <div class="overflow-x-auto border border-b">
         <!-- Added a wrapper div for scrollable functionality -->
         <div class="max-h-64 overflow-y-auto">
-            <table id="userTable" class="min-w-full bg-white border rounded-md overflow-hidden shadow-sm transition-shadow duration-300 hover:shadow-md">
+            <table id="userTable"
+                class="min-w-full bg-white border rounded-md overflow-hidden shadow-sm transition-shadow duration-300 hover:shadow-md">
                 <thead class="bg-gray-50">
                     <tr>
-                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
-                        <th class="py-2 px-4 border-b text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        <th
+                            class="py-2 px-4 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Name</th>
+                        <th
+                            class="py-2 px-4 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Email</th>
+                        <th
+                            class="py-2 px-4 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Role</th>
+                        <th
+                            class="py-2 px-4 border-b text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Actions</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                    @foreach($users as $user)
+                    @foreach ($users as $user)
                     <tr class="hover:bg-gray-100 transition-colors duration-300">
                         <td class="py-2 px-4 text-xs text-gray-700">{{ $user->name }}</td>
                         <td class="py-2 px-4 text-xs text-gray-700">{{ $user->email }}</td>
                         <td class="py-2 px-4 text-xs text-gray-700">{{ $user->role }}</td>
                         <td class="py-2 px-4 text-xs text-gray-700 text-center">
                             <div x-data="{ open: false }" class="relative inline-flex items-center">
-                                <button @click="open = !open" class="inline-flex items-center justify-center p-1 transition-transform duration-300 hover:scale-105">
+                                <button @click="open = !open"
+                                    class="inline-flex items-center justify-center p-1 transition-transform duration-300 hover:scale-105">
                                     <div class="rounded-full bg-[#9d1e18] p-2 hover:bg-yellow-500" title="Change Role">
-                                        <img src="/svg/switch user.svg" alt="Change Role" class="h-5 w-5" style="filter: brightness(0) invert(1);">
+                                        <img src="/svg/switch user.svg" alt="Change Role" class="h-5 w-5"
+                                            style="filter: brightness(0) invert(1);">
                                     </div>
                                 </button>
 
@@ -133,12 +144,15 @@
                                     </form>
                                 </div>
 
-                                <form action="{{ route('admin.remove-access', $user->id) }}" method="POST" class="inline">
+                                <form action="{{ route('admin.remove-access', $user->id) }}" method="POST"
+                                    class="inline">
                                     @csrf
                                     @method('PATCH')
-                                    <button type="submit" class="inline-flex items-center justify-center p-1 transition-transform duration-300 hover:scale-105">
+                                    <button type="submit"
+                                        class="inline-flex items-center justify-center p-1 transition-transform duration-300 hover:scale-105">
                                         <div class="rounded-full bg-[#4b5563] p-2 hover:bg-[#6b7280]" title="Remove Access">
-                                            <img src="/svg/remove access.svg" alt="Remove Access" class="h-5 w-5" style="filter: brightness(0) invert(1);">
+                                            <img src="/svg/remove access.svg" alt="Remove Access" class="h-5 w-5"
+                                                style="filter: brightness(0) invert(1);">
                                         </div>
                                     </button>
                                 </form>

@@ -3,28 +3,52 @@
 @section('content')
 <div class="container mx-auto">
     <div class="bg-white p-6 rounded-lg shadow-lg mb-8 transition-transform duration-200 hover:scale-101">
+
         <!-- Number of Messages and Balance -->
         <div class="mb-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            @foreach([
-            ['Total Messages Sent to Recipients', $totalSent, '#d50600', 'bg-red-50', 'fa-paper-plane'],
-            ['Scheduled Messages Sent', $scheduledSent, '#b10000', 'bg-red-100', 'fa-clock'],
-            ['Failed Messages', $totalFailed, '#990000', 'bg-red-200', 'fa-times-circle'],
-            ['Immediate Messages Sent', $totalImmediate, '#d1a700', 'bg-yellow-100', 'fa-bolt'],
-            ['Cancelled Messages', $totalCancelled, '#6b7280', 'bg-gray-200', 'fa-ban'],
-            ['Pending Messages', $totalPending, '#e07b00', 'bg-orange-100', 'fa-hourglass-half'],
-            ['Remaining Account Balance', $balance, '#7e57c2', 'bg-purple-100', 'fa-wallet']
-            ] as $stat)
-            <div class="{{ $stat[3] }} p-6 border-l-4 border-[{{ $stat[2] }}] rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out hover:scale-105">
-                <div class="flex items-center space-x-3">
-                    <i class="fas {{ $stat[4] }} text-2xl text-[{{ $stat[2] }}]"></i>
-                    <div>
-                        <h2 class="text-xl font-bold text-[{{ $stat[2] }}]">{{ $stat[0] }}</h2>
-                        <p class="text-2xl font-semibold text-[{{ $stat[2] }}]">{{ $stat[1] }}</p>
-                    </div>
-                </div>
+            <!-- Total Messages Sent Card -->
+            <div class="bg-red-50 p-4 border-l-4 border-[#d50600] rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out hover:scale-105 cursor-pointer">
+                <h2 class="text-xl font-bold text-[#d50600]">Total Messages Sent to Recipients</h2>
+                <p class="text-2xl font-semibold text-[#d50600]">{{ $totalRecipients }}</p>
             </div>
-            @endforeach
+
+            <!-- Scheduled Messages Sent Card -->
+            <div id="scheduledMessagesSentCard" class="bg-red-100 p-4 border-l-4 border-[#b10000] rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out hover:scale-105 cursor-pointer">
+                <h2 class="text-xl font-bold text-[#b10000]">Scheduled Messages Sent</h2>
+                <p class="text-2xl font-semibold text-[#b10000]">{{ $scheduledSentRecipients }}</p>
+            </div>
+
+            <!-- Immediate Messages Sent Card -->
+            <div id="immediateMessagesSentCard" class="bg-yellow-100 p-4 border-l-4 border-[#d1a700] rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out hover:scale-105 cursor-pointer">
+                <h2 class="text-xl font-bold text-[#d1a700]">Immediate Messages Sent</h2>
+                <p class="text-2xl font-semibold text-[#d1a700]">{{ $immediateSentRecipients }}</p>
+            </div>
+
+            <!-- Failed Messages Card -->
+            <div id="failedMessagesCard" class="bg-red-200 p-4 border-l-4 border-[#990000] rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out hover:scale-105 cursor-pointer">
+                <h2 class="text-xl font-bold text-[#990000]">Failed Messages</h2>
+                <p class="text-2xl font-semibold text-[#990000]">{{ $totalFailedRecipients }}</p>
+            </div>
+
+            <!-- Cancelled Messages Card -->
+            <div class="bg-gray-200 p-4 border-l-4 border-[#6b7280] rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out hover:scale-105 cursor-pointer">
+                <h2 class="text-xl font-bold text-[#6b7280]">Cancelled Messages</h2>
+                <p class="text-2xl font-semibold text-[#6b7280]">{{ $totalCancelled }}</p>
+            </div>
+
+            <!-- Pending Messages Card -->
+            <div class="bg-orange-100 p-4 border-l-4 border-[#e07b00] rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out hover:scale-105 cursor-pointer">
+                <h2 class="text-xl font-bold text-[#e07b00]">Pending Messages</h2>
+                <p class="text-2xl font-semibold text-[#e07b00]">{{ $totalPending }}</p>
+            </div>
+
+            <!-- Remaining Account Balance Card -->
+            <div class="bg-purple-100 p-4 border-l-4 border-[#7e57c2] rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out hover:scale-105 cursor-pointer">
+                <h2 class="text-xl font-bold text-[#7e57c2]">Remaining Account Balance</h2>
+                <p class="text-2xl font-semibold text-[#7e57c2]">{{ $balance }}</p>
+            </div>
         </div>
+
 
         <!-- Message Logs Section -->
         <h2 class="text-2xl font-bold mb-4 border-b-2 border-[#9d1e18] pb-2">Message Logs</h2>
@@ -127,8 +151,38 @@
     </div>
 </div>
 
+<!-- Modal HTML Structure -->
+<div id="recipientModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center hidden z-50">
+    <div class="bg-white rounded-lg shadow-lg w-3/4 md:w-1/2 lg:w-1/3">
+        <!-- Modal Header -->
+        <div class="flex justify-between items-center border-b px-4 py-2">
+            <h3 class="text-lg font-semibold">Recipients Details</h3>
+            <button id="closeModal" class="text-gray-500 hover:text-gray-800">
+                &times;
+            </button>
+        </div>
+
+        <!-- Modal Content -->
+        <div id="recipientContent" class="p-4 max-h-80 overflow-y-auto">
+            <!-- Recipient details will be dynamically populated here -->
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="border-t px-4 py-2 flex justify-end">
+            <button id="closeModalFooter" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">
+                Close
+            </button>
+        </div>
+    </div>
+    <!-- Inject user role data into JavaScript -->
+    <script>
+        const baseUrl = @json(Auth::user() -> role === 'admin' ? '/admin/recipients' : '/subadmin/recipients');
+    </script>
+</div>
+
 @vite([
 'resources/js/app.css',
+'resources/js/redirect.js',
 'resources/js/messageLogs.js',
 'resources/js/modal.js'])
 @endsection

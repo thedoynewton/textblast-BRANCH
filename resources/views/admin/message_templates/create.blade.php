@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 
+@section('title', 'Create Message Template')
+
 @section('content')
 <div class="bg-white p-8 rounded-lg shadow-lg">
     <form action="{{ route('message_templates.store') }}" method="POST">

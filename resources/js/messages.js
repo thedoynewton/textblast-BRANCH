@@ -1,9 +1,10 @@
+// Directly embedded JavaScript
 document.addEventListener('DOMContentLoaded', function () {
     // Initialize filters on page load
     toggleFilters();
 
-    // Retrieve the primary color from CSS variables
-    const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim();
+        // Retrieve the primary color from CSS variables
+        const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim();
 
     // Highlight the "ALL" tab by default
     const allTabButton = document.querySelector('.tab-button[data-value="all"]');
@@ -23,7 +24,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 btn.style.borderColor = '';  // Remove the inline border color style
                 btn.style.color = '';        // Remove the inline text color style
             });
-
             this.classList.add('border-b-2');
             this.style.borderColor = primaryColor;  // Apply the primary color
             this.style.color = primaryColor;        // Set text color to primary color
@@ -44,15 +44,13 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('office').addEventListener('change', updateTypeDropdown);
     document.getElementById('status').addEventListener('change', updateTypeDropdown);
     document.getElementById('college').addEventListener('change', updateProgramDropdown);
-
-    // New: Add event listener for major dropdown update
     document.getElementById('program').addEventListener('change', updateMajorDropdown);
 
     // Event listeners for all dropdowns
     document.getElementById('campus').addEventListener('change', updateRecipientCount);
     document.getElementById('college').addEventListener('change', updateRecipientCount);
     document.getElementById('program').addEventListener('change', updateRecipientCount);
-    document.getElementById('major').addEventListener('change', updateRecipientCount); // New: Major dropdown listener
+    document.getElementById('major').addEventListener('change', updateRecipientCount);
     document.getElementById('year').addEventListener('change', updateRecipientCount);
     document.getElementById('office').addEventListener('change', updateRecipientCount);
     document.getElementById('status').addEventListener('change', updateRecipientCount);
@@ -128,7 +126,7 @@ function toggleFilters() {
     // Clear dropdown values when switching tabs
     clearDropdownOptions('college');
     clearDropdownOptions('program');
-    clearDropdownOptions('major'); // New: Clear majors dropdown
+    clearDropdownOptions('major');
     clearDropdownOptions('year');
     clearDropdownOptions('office');
     clearDropdownOptions('status');
@@ -148,7 +146,7 @@ function updateDependentFilters() {
         // If "All Campuses" is chosen, clear all other dropdowns
         clearDropdownOptions('college');
         clearDropdownOptions('program');
-        clearDropdownOptions('major'); // Clear majors if campus changes
+        clearDropdownOptions('major');
         clearDropdownOptions('year');
         clearDropdownOptions('office');
         clearDropdownOptions('status');
@@ -192,7 +190,7 @@ function clearDropdownOptions(selectId) {
         select.innerHTML = '<option value="" disabled selected>Select Academic Unit</option>';
         select.innerHTML += '<option value="all">All Academic Unit</option>';
     } else if (selectId === 'major') {
-        select.innerHTML = '<option value="" disabled selected>Select Major</option>'; // New: Major dropdown
+        select.innerHTML = '<option value="" disabled selected>Select Major</option>';
         select.innerHTML += '<option value="all">All Majors</option>';
     } else {
         select.innerHTML = '<option value="" disabled selected>Select ' + selectId.charAt(0).toUpperCase() + selectId.slice(1) + '</option>';
@@ -203,7 +201,6 @@ function clearDropdownOptions(selectId) {
 function updateProgramDropdown() {
     var collegeId = document.getElementById('college').value;
 
-    // Reset the program and major dropdown
     clearDropdownOptions('program');
     clearDropdownOptions('major'); // Clear majors when college or program changes
 
@@ -221,7 +218,7 @@ function updateProgramDropdown() {
     }
 }
 
-// New: Update major dropdown based on selected program
+// Update major dropdown based on selected program
 function updateMajorDropdown() {
     var programId = document.getElementById('program').value;
 
@@ -265,7 +262,7 @@ function updateRecipientCount() {
     const campusId = document.getElementById('campus').value;
     const collegeId = document.getElementById('college') ? document.getElementById('college').value : null;
     const programId = document.getElementById('program') ? document.getElementById('program').value : null;
-    const majorId = document.getElementById('major') ? document.getElementById('major').value : null; // New: Add majorId
+    const majorId = document.getElementById('major') ? document.getElementById('major').value : null;
     const yearId = document.getElementById('year') ? document.getElementById('year').value : null;
     const officeId = document.getElementById('office') ? document.getElementById('office').value : null;
     const statusId = document.getElementById('status') ? document.getElementById('status').value : null;
@@ -275,7 +272,7 @@ function updateRecipientCount() {
     document.getElementById('total_recipients').value = '0';
 
     fetch(
-        `/api/recipients/count?broadcast_type=${broadcastType}&campus_id=${campusId}&college_id=${collegeId}&program_id=${programId}&major_id=${majorId}&year_id=${yearId}&office_id=${officeId}&status_id=${statusId}&type_id=${typeId}`) // New: Include majorId in the API call
+        `/api/recipients/count?broadcast_type=${broadcastType}&campus_id=${campusId}&college_id=${collegeId}&program_id=${programId}&major_id=${majorId}&year_id=${yearId}&office_id=${officeId}&status_id=${statusId}&type_id=${typeId}`)
         .then(response => response.json())
         .then(data => {
             document.getElementById('total_recipients').value = data.total;
@@ -284,4 +281,4 @@ function updateRecipientCount() {
             console.error('Error fetching recipient count:', error);
             document.getElementById('total_recipients').value = 'Error';
         });
-}
+}   

@@ -46,11 +46,6 @@
             </div>
         </div>
 
-        <!-- Edit Message Button -->
-        <button class="bg-yellow-500 text-white px-4 py-2 rounded-lg mr-2">
-            <a href="{{ route('admin.messages', $data) }}">Edit Message</a>
-        </button>
-        
         <!-- Form to confirm and send the message -->
         <form action="{{ route('admin.broadcastToRecipients') }}" method="POST" style="display: inline;">
             @csrf
@@ -94,10 +89,11 @@
 
             <input type="hidden" name="total_recipients" value="{{ $totalRecipients }}">
             @endif
-
-            <button type="submit" class="bg-[#8b0000] text-white px-4 py-2 rounded-lg">
-                Confirm and Send
-            </button>
+            <!-- Edit Message Button -->
+            <x-button type="button" color="gray">
+                <a href="{{ route('admin.messages', $data) }}">Edit Message</a>
+            </x-button>
+            <x-button type="submit" color="red">Confirm and Send</x-button>
         </form>
     </div>
 

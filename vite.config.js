@@ -10,6 +10,7 @@ export default defineConfig({
                 // General Blade (Welcome, Admin & Subadmin)
                 'resources/js/app.js', // Centralize Functions (Wave, Theme, Form Validation)
                 'resources/js/redirect.js', // Welcome
+                'resources/js/messageLogs.js',
 
                 // Message Page
                 'resources/js/messages.js',
@@ -23,7 +24,6 @@ export default defineConfig({
 
                 // App Management
                 'resources/js/app-management.js',
-                'resources/js/messageLogs.js',
                 'resources/js/modal.js'
             ],
             refresh: true,

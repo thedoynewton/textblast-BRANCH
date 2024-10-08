@@ -23,7 +23,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Check if the row matches the selected message type in the STATUS column (10th column)
             const statusCell = row.querySelector('td:nth-child(10)'); // Adjusted index to the correct column
-
             if (messageType !== 'all' && statusCell.textContent.toLowerCase() !== messageType) {
                 messageTypeMatch = false;
             }

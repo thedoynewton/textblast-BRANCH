@@ -1,7 +1,5 @@
 @extends('layouts.subadmin')
 
-@section('title', 'Messages')
-
 @section('content')
     <!-- Display Success or Error Messages -->
     @if (session('success'))
@@ -114,15 +112,15 @@
                         </select>
                     </div>
 
-                <!-- New: Major Selection Dropdown -->
-                <div class="w-1/4">
-                    <label for="major" class="block text-sm font-medium">Major</label>
-                    <select name="major" id="major" required
-                        class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm p-2">
-                        <option value="" disabled selected>Select Major</option>
-                        <option value="all">All Majors</option>
-                    </select>
-                </div>
+                    <!-- Major Selection Dropdown -->
+                    <div class="w-1/4">
+                        <label for="major" class="block text-sm font-medium">Major</label>
+                        <select name="major" id="major" required
+                            class="block w-full mt-1 border border-gray-300 rounded-md shadow-sm p-2">
+                            <option value="" disabled selected>Select Major</option>
+                            <option value="all">All Majors</option>
+                        </select>
+                    </div>
 
                     <div class="w-1/3">
                         <label for="year" class="block text-sm font-medium">Year</label>
@@ -177,6 +175,11 @@
                 <textarea name="message" id="message" placeholder="Enter your message here ..." rows="4"
                     class="block w-full mt-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50 focus:ring-indigo-300 p-2 text-sm overflow-y-auto resize-none"
                     style="color: var(--primary-text); height: 14rem" required>{{ request('message') }}</textarea>
+                <div class="mt-1 text-sm text-gray-500">
+                    <span id="charCount">0</span>/160 characters
+                </div>
+                <p id="charWarning" class="mt-1 text-red-500 text-sm hidden">The message exceeds 160 characters and may be
+                    split into multiple SMS.</p>
             </div>
 
             <div class="mb-6 flex items-center space-x-8">
@@ -214,10 +217,10 @@
             </div>
 
             <div class="flex justify-end">
-                <x-button type="submit" color="yellow">Review Message</x-button>
+                <x-button type="submit" color="red" id="reviewButton" disabled>Review Message</x-button>
             </div>
         </form>
     </div>
     <!-- This loads the script in resources/js -->
-    @vite(['resources/js/messages.js', 'resources/js/messagesWarning.js'])
+    @vite(['resources/js/messages.js', 'resources/js/app.js', 'resources/js/characterCount.js'])
 @endsection
