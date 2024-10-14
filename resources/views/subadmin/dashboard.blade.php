@@ -7,7 +7,7 @@
             <!-- Number of Messages and Balance -->
             <div class="mb-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Total Messages Sent Card -->
-                <div class="bg-red-50 p-4 border-l-4 border-[#d50600] rounded-lg shadow-md">
+                <div class="bg-red-50 p-4 border-l-4 border-[#d50600] rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out hover:scale-105 cursor-pointer">
                     <h2 class="text-xl font-bold text-[#d50600]">Total Messages Sent to Recipients</h2>
                     <p class="text-2xl font-semibold text-[#d50600]">{{ $totalRecipients }}</p>
                 </div>
@@ -31,19 +31,19 @@
                 </div>
 
                 <!-- Cancelled Messages Card -->
-                <div class="bg-gray-200 p-4 border-l-4 border-[#6b7280] rounded-lg shadow-md">
+                <div class="bg-gray-200 p-4 border-l-4 border-[#6b7280] rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out hover:scale-105 cursor-pointer">
                     <h2 class="text-xl font-bold text-[#6b7280]">Cancelled Messages</h2>
                     <p class="text-2xl font-semibold text-[#6b7280]">{{ $totalCancelled }}</p>
                 </div>
 
                 <!-- Pending Messages Card -->
-                <div class="bg-orange-100 p-4 border-l-4 border-[#e07b00] rounded-lg shadow-md">
+                <div class="bg-orange-100 p-4 border-l-4 border-[#e07b00] rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out hover:scale-105 cursor-pointer">
                     <h2 class="text-xl font-bold text-[#e07b00]">Pending Messages</h2>
                     <p class="text-2xl font-semibold text-[#e07b00]">{{ $totalPending }}</p>
                 </div>
 
-                  <!-- Remaining Account Balance Card -->
-                <div class="bg-purple-100 p-4 border-l-4 border-[#7e57c2] rounded-lg shadow-md">
+                <!-- Remaining Account Balance Card -->
+                <div class="bg-purple-100 p-4 border-l-4 border-[#7e57c2] rounded-lg shadow-md hover:shadow-lg transition-all duration-200 ease-in-out hover:scale-105 cursor-pointer">
                     <h2 class="text-xl font-bold text-[#7e57c2]">Remaining Account Balance</h2>
                     <p class="text-2xl font-semibold text-[#7e57c2]">{{ $balance }}</p>
                 </div>
