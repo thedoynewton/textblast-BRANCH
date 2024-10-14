@@ -91,6 +91,7 @@ Route::middleware(['auth', CheckRole::class . ':subadmin'])->group(function () {
 
     // Analytics
     Route::get('/subadmin/analytics', [SubAdminController::class, 'analytics'])->name('subadmin.analytics');
+    Route::get('/api/analytics/messages', [AnalyticsController::class, 'getBroadcastedMessagesData']);
 });
 
 // API Route for fetching dependent filters
