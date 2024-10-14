@@ -19,7 +19,7 @@
 
 <body class="h-screen flex">
     <!-- Sidebar -->
-    <div class="bg-white w-73 shadow-lg flex flex-col justify-between fixed h-full">
+    <div class="bg-white w-73 shadow-lg flex flex-col justify-between fixed h-full z-50">
         <!-- Menu -->
         <div>
             <div class="flex flex-col items-center mt-6">

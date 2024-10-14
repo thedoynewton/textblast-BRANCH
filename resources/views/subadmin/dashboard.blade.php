@@ -181,6 +181,7 @@
 
 @vite([
 'resources/js/app.css',
+'resources/js/redirect.js',
 'resources/js/searchMessageLogs.js',
 'resources/js/modal.js'])
 @endsection
