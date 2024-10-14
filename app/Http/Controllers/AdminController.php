@@ -55,7 +55,7 @@ class AdminController extends Controller
         // Get balance using Movider Service
         $balanceData = $moviderService->getBalance();
         $balance = $balanceData['balance'] ?? 0;
-    
+
         // Query MessageLog table only once and aggregate counts
         $messageStats = MessageLog::selectRaw("
             SUM(sent_count) AS total_recipients, -- Total sent recipients
@@ -66,7 +66,7 @@ class AdminController extends Controller
             COUNT(CASE WHEN status = 'Pending' THEN 1 END) AS total_pending,
             COUNT(CASE WHEN status = 'Scheduled' THEN 1 END) AS total_scheduled
         ")->first();
-    
+
         // Set default values if stats are null
         $totalRecipients = $messageStats->total_recipients ?? 0; // Total recipients sent
         $scheduledSentRecipients = $messageStats->scheduled_sent_recipients ?? 0;
@@ -75,10 +75,10 @@ class AdminController extends Controller
         $totalCancelled = $messageStats->total_cancelled ?? 0;
         $totalPending = $messageStats->total_pending ?? 0;
         $totalScheduled = $messageStats->total_scheduled ?? 0;
-    
+
         // Fetch all message logs, including the associated user and campus data
         $messageLogs = MessageLog::with(['user', 'campus'])->orderBy('created_at', 'desc')->get();
-    
+
         return view('admin.dashboard', compact(
             'balance',
             'totalRecipients',
@@ -91,7 +91,7 @@ class AdminController extends Controller
             'messageLogs'
         ));
     }
-        
+
 
     public function messages()
     {
@@ -136,26 +136,34 @@ class AdminController extends Controller
 
     public function analytics(MoviderService $moviderService)
     {
-        $balanceData = $moviderService->getBalance();
-        $balance = $balanceData['balance'] ?? 0;
-
-        // Fetch campuses, years, offices, statuses, and types from the database
+        // Fetch necessary data for the filters
         $campuses = Campus::all();
         $years = Year::all();
         $offices = Office::all();
         $statuses = Status::all();
         $types = Type::all();
-
+        $colleges = College::all();      // Fetch colleges
+        $programs = Program::all();      // Fetch programs
+        $majors = Major::all();          // Fetch majors
+        // Fetch balance using Movider Service
+        $balanceData = $moviderService->getBalance();
+        $balance = $balanceData['balance'] ?? 0;
         // Set the threshold for low balance
         $warningThreshold = 0.065; // Adjust as needed
-
-        // Check if the balance is low
         $lowBalance = $balance < $warningThreshold;
-
-        // Log the balance value
-        Log::info('Movider Balance:', ['balance' => $balance]);
-
-        return view('admin.analytics', compact('balance', 'lowBalance', 'campuses', 'years', 'offices', 'statuses', 'types'));
+        // Pass all data to the view, including filters and balance data
+        return view('admin.analytics', compact(
+            'balance',
+            'lowBalance',
+            'campuses',
+            'years',
+            'offices',
+            'statuses',
+            'types',
+            'colleges',
+            'programs',
+            'majors'
+        ));
     }
 
     public function userManagement()

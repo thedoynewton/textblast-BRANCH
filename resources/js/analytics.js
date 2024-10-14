@@ -1,69 +1,92 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const ctx = document.getElementById('messagesChart').getContext('2d');
-    const startDateInput = document.getElementById('start-date');
-    const endDateInput = document.getElementById('end-date');
-    const campusSelect = document.getElementById('campus-filter');
     const applyFiltersButton = document.getElementById('apply-filters');
+    const recipientTypeSelect = document.getElementById('recipient-type');
+    const studentFilters = document.getElementById('student-filters');
+    const employeeFilters = document.getElementById('employee-filters');
 
-    // Initialize Chart.js
-    let messagesChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: [], // Dates will be added dynamically
-            datasets: [
-                {
-                    label: 'Successful Messages',
-                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1,
-                    data: [] // Success counts will be added dynamically
-                },
-                {
-                    label: 'Failed Messages',
-                    backgroundColor: 'rgba(255, 99, 132, 0.6)',
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    borderWidth: 1,
-                    data: [] // Failed counts will be added dynamically
-                }
-            ]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                x: {
-                    beginAtZero: true
-                },
-                y: {
-                    beginAtZero: true
-                }
-            }
+    // Function to toggle filters based on recipient type
+    function toggleFilters() {
+        const recipientType = recipientTypeSelect.value;
+        if (recipientType === 'students') {
+            studentFilters.classList.remove('hidden');
+            employeeFilters.classList.add('hidden');
+        } else if (recipientType === 'employees') {
+            employeeFilters.classList.remove('hidden');
+            studentFilters.classList.add('hidden');
+        } else {
+            studentFilters.classList.add('hidden');
+            employeeFilters.classList.add('hidden');
         }
-    });
+    }
+    // Listen for changes on the recipient type filter
+    recipientTypeSelect.addEventListener('change', toggleFilters);
 
     // Function to fetch and update the chart data
     function fetchChartData() {
-        const startDate = startDateInput.value;
-        const endDate = endDateInput.value;
-        const campus = campusSelect.value;
+        const startDate = document.getElementById('start-date').value;
+        const endDate = document.getElementById('end-date').value;
+        const campus = document.getElementById('campus-filter').value;
+        const recipientType = recipientTypeSelect.value;
+        // Get filters for students and employees
+        const college = document.getElementById('college-filter').value;
+        const program = document.getElementById('program-filter').value;
+        const major = document.getElementById('major-filter').value;
+        const year = document.getElementById('year-filter').value;
+        const office = document.getElementById('office-filter').value;
+        const status = document.getElementById('status-filter').value;
+        const type = document.getElementById('type-filter').value;
+        // Build the query string for filters
+        let queryString = `start_date=${startDate}&end_date=${endDate}&campus=${campus}&recipient_type=${recipientType}`;
+        if (recipientType === 'students') {
+            queryString += `&college=${college}&program=${program}&major=${major}&year=${year}`;
+        } else if (recipientType === 'employees') {
+            queryString += `&office=${office}&status=${status}&type=${type}`;
+        }
 
         // Make an AJAX request to get chart data
-        fetch(`/api/analytics/messages?start_date=${startDate}&end_date=${endDate}&campus=${campus}`)
+        fetch(`/api/analytics/messages?${queryString}`)
             .then(response => response.json())
             .then(data => {
                 // Update chart data
-                messagesChart.data.labels = data.labels;
-                messagesChart.data.datasets[0].data = data.success; // Success counts
-                messagesChart.data.datasets[1].data = data.failed; // Failed counts
-
-                // Refresh chart
-                messagesChart.update();
+                const messagesChart = new Chart(document.getElementById('messagesChart').getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: data.labels,
+                        datasets: [
+                            {
+                                label: 'Successful Messages',
+                                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1,
+                                data: data.success
+                            },
+                            {
+                                label: 'Failed Messages',
+                                backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                                borderColor: 'rgba(255, 99, 132, 1)',
+                                borderWidth: 1,
+                                data: data.failed
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            x: {
+                                beginAtZero: true
+                            },
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
             })
             .catch(error => console.error('Error fetching data:', error));
     }
 
-    // Initial fetch when page loads
-    fetchChartData();
-
     // Apply filter on button click
     applyFiltersButton.addEventListener('click', fetchChartData);
+    // Initial fetch when page loads
+    fetchChartData();
 });
